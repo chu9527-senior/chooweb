@@ -204,23 +204,17 @@
     width:220px;
     height:220px;
     border-radius:50%;
+    overflow:hidden;
     background:linear-gradient(145deg,var(--color-navy),var(--color-navy-light));
-    display:flex;
-    align-items:center;
-    justify-content:center;
-    color:var(--color-gold-light);
-    font-size:3rem;
-    font-weight:800;
     box-shadow:var(--shadow);
     flex-shrink:0;
     border:6px solid var(--color-white);
   }
-  .hero-photo small{
+  .hero-photo img{
+    width:100%;
+    height:100%;
+    object-fit:cover;
     display:block;
-    font-size:0.7rem;
-    font-weight:500;
-    color:rgba(255,255,255,0.7);
-    margin-top:4px;
   }
 
   /* Profile / About */
@@ -323,6 +317,16 @@
     padding:4px 10px;
     border-radius:999px;
   }
+  .book-cover{
+    width:100%;
+    max-width:150px;
+  }
+  .book-cover img{
+    width:100%;
+    border-radius:8px;
+    box-shadow:0 8px 20px rgba(28,43,69,0.18);
+    display:block;
+  }
 
   /* Speaking topics */
   .topics{background:var(--color-white);}
@@ -419,6 +423,22 @@
   #formMsg.show{display:block;}
   #formMsg.success{background:#e7f4ea;color:#276b3a;}
   #formMsg.error{background:#fbeaea;color:#a33a3a;}
+  .contact-email-link{
+    color:var(--color-gold);
+    font-weight:700;
+    text-decoration:underline;
+  }
+  .form-fallback{
+    font-size:0.85rem;
+    color:var(--color-text-muted);
+    text-align:center;
+    margin:0;
+  }
+  .form-fallback a{
+    color:var(--color-navy);
+    font-weight:700;
+    text-decoration:underline;
+  }
 
   /* Footer */
   footer{
@@ -513,9 +533,8 @@
           <a href="#books" class="btn btn-outline">저서 보기</a>
         </div>
       </div>
-      <div class="hero-photo" aria-hidden="true">
-        추영준
-        <small>PROFILE PHOTO</small>
+      <div class="hero-photo">
+        <img src="images/profile-caricature.jpg" alt="추영준 캐리커처 프로필" width="220" height="220">
       </div>
     </div>
   </section>
@@ -579,15 +598,15 @@
       <p class="section-desc">글쓰기, 취업, 웰니스, 조직문화, 그리고 인생 전반을 다룬 책을 통해 독자와 만나고 있습니다.</p>
       <div class="book-grid">
         <div class="book-card">
-          <div class="book-spine"></div>
+          <div class="book-cover"><img src="images/book-writing.jpg" alt="『글쓰기가 막막한 당신에게』 표지"></div>
           <p class="book-title">글쓰기가 막막한 당신에게</p>
         </div>
         <div class="book-card">
-          <div class="book-spine"></div>
+          <div class="book-cover"><img src="images/book-essay.jpg" alt="『합격 자소서 특강』 표지"></div>
           <p class="book-title">합격 자소서 특강</p>
         </div>
         <div class="book-card">
-          <div class="book-spine"></div>
+          <div class="book-cover"><img src="images/book-wellness.jpg" alt="『2026 웰니스 치유 트렌드』 표지"></div>
           <p class="book-title">2026 웰니스 치유 트렌드</p>
         </div>
         <div class="book-card">
@@ -633,7 +652,8 @@
           <div class="fact-icon">@</div>
           <div>
             <p class="fact-title">이메일 문의</p>
-            <p class="fact-desc">아래 양식을 작성 후 버튼을 누르면 이메일 프로그램이 열립니다. 내용을 확인하신 후 전송해 주시면 빠르게 답변드리겠습니다.</p>
+            <p class="fact-desc">아래 양식을 작성 후 버튼을 누르면 이메일 프로그램이 열립니다. 내용을 확인하신 후 전송해 주시면 빠르게 답변드리겠습니다.<br>
+            버튼이 작동하지 않으면 <a href="mailto:chu9527@nate.com" class="contact-email-link">chu9527@nate.com</a>으로 직접 메일 보내주세요.</p>
           </div>
         </div>
       </div>
@@ -683,6 +703,7 @@
         </div>
 
         <button type="submit" class="btn btn-primary" id="submitBtn">프로그램 제안·요청 보내기</button>
+        <p class="form-fallback">버튼을 눌러도 메일 프로그램이 열리지 않으면 <a href="mailto:chu9527@nate.com">chu9527@nate.com</a>으로 직접 문의해 주세요.</p>
       </form>
     </div>
   </section>
