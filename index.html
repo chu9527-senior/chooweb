@@ -633,12 +633,12 @@
           <div class="fact-icon">@</div>
           <div>
             <p class="fact-title">이메일 문의</p>
-            <p class="fact-desc">아래 양식을 통해 문의를 남겨주시면 담당자에게 바로 전달됩니다.</p>
+            <p class="fact-desc">아래 양식을 작성 후 버튼을 누르면 이메일 프로그램이 열립니다. 내용을 확인하신 후 전송해 주시면 빠르게 답변드리겠습니다.</p>
           </div>
         </div>
       </div>
 
-      <form id="contactForm" action="contact.php" method="POST" novalidate>
+      <form id="contactForm" novalidate>
         <div id="formMsg" role="status"></div>
 
         <div class="form-row">
@@ -647,8 +647,18 @@
         </div>
 
         <div class="form-row">
+          <label for="organization">소속</label>
+          <input type="text" id="organization" name="organization" autocomplete="organization" placeholder="소속 기관/학교/회사명 (선택)">
+        </div>
+
+        <div class="form-row">
           <label for="phone">연락처 <span aria-hidden="true">*</span></label>
-          <input type="tel" id="phone" name="phone" required autocomplete="tel" placeholder="010-0000-0000 또는 이메일">
+          <input type="tel" id="phone" name="phone" required autocomplete="tel" placeholder="010-0000-0000">
+        </div>
+
+        <div class="form-row">
+          <label for="email">이메일 <span aria-hidden="true">*</span></label>
+          <input type="email" id="email" name="email" required autocomplete="email" placeholder="example@email.com">
         </div>
 
         <div class="form-row">
@@ -672,7 +682,7 @@
           <input type="text" id="website" name="website" tabindex="-1" autocomplete="off">
         </div>
 
-        <button type="submit" class="btn btn-primary" id="submitBtn">문의 보내기</button>
+        <button type="submit" class="btn btn-primary" id="submitBtn">프로그램 제안·요청 보내기</button>
       </form>
     </div>
   </section>
@@ -711,42 +721,54 @@
   // 푸터 연도 자동 표시
   document.getElementById('year').textContent = new Date().getFullYear();
 
-  // 문의 폼 제출 (fetch로 비동기 전송, contact.php가 JSON 응답)
+  // 문의 폼 제출 (GitHub Pages 등 정적 호스팅 대응: mailto로 기본 이메일 프로그램 실행)
+  // 추후 PHP 호스팅으로 옮기면 contact.php + fetch 방식으로 되돌릴 수 있습니다.
   var form = document.getElementById('contactForm');
   var formMsg = document.getElementById('formMsg');
-  var submitBtn = document.getElementById('submitBtn');
+  var RECIPIENT_EMAIL = 'chu9527@nate.com';
 
   form.addEventListener('submit', function(e){
     e.preventDefault();
-    formMsg.className = '';
-    submitBtn.disabled = true;
-    submitBtn.textContent = '전송 중...';
 
-    fetch(form.action, {
-      method: 'POST',
-      headers: { 'X-Requested-With': 'XMLHttpRequest' },
-      body: new FormData(form)
-    })
-    .then(function(res){ return res.json().catch(function(){ return { ok:false, message:'서버 응답을 처리할 수 없습니다.' }; }); })
-    .then(function(data){
-      if (data.ok) {
-        formMsg.textContent = data.message || '문의가 정상적으로 접수되었습니다. 감사합니다.';
-        formMsg.className = 'show success';
-        form.reset();
-      } else {
-        formMsg.textContent = data.message || '문의 접수 중 오류가 발생했습니다. 잠시 후 다시 시도해 주세요.';
-        formMsg.className = 'show error';
-      }
-    })
-    .catch(function(){
-      formMsg.textContent = '네트워크 오류로 문의를 보내지 못했습니다. 잠시 후 다시 시도해 주세요.';
-      formMsg.className = 'show error';
-    })
-    .finally(function(){
-      submitBtn.disabled = false;
-      submitBtn.textContent = '문의 보내기';
-      formMsg.scrollIntoView({ behavior:'smooth', block:'nearest' });
-    });
+    // 허니팟 필드가 채워져 있으면 봇으로 간주하고 조용히 무시
+    var honeypot = document.getElementById('website');
+    if (honeypot && honeypot.value) {
+      return;
+    }
+
+    if (!form.checkValidity()) {
+      form.reportValidity();
+      return;
+    }
+
+    var name = document.getElementById('name').value.trim();
+    var organization = document.getElementById('organization').value.trim();
+    var phone = document.getElementById('phone').value.trim();
+    var email = document.getElementById('email').value.trim();
+    var inquiryType = document.getElementById('inquiry_type').value;
+    var message = document.getElementById('message').value.trim();
+
+    var subject = '[인생설계가이드 홈페이지] ' + inquiryType + ' - ' + name;
+    var bodyLines = [
+      '이름   : ' + name,
+      '소속   : ' + (organization || '(미입력)'),
+      '연락처 : ' + phone,
+      '이메일 : ' + email,
+      '',
+      '문의 내용',
+      message
+    ];
+    var body = bodyLines.join('\n');
+
+    var mailtoUrl = 'mailto:' + RECIPIENT_EMAIL
+      + '?subject=' + encodeURIComponent(subject)
+      + '&body=' + encodeURIComponent(body);
+
+    window.location.href = mailtoUrl;
+
+    formMsg.textContent = '이메일 프로그램이 열립니다. 내용을 확인하신 후 전송해 주세요.';
+    formMsg.className = 'show success';
+    formMsg.scrollIntoView({ behavior:'smooth', block:'nearest' });
   });
 </script>
 
