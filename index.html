@@ -648,13 +648,13 @@
           <div class="fact-icon">@</div>
           <div>
             <p class="fact-title">이메일 문의</p>
-            <p class="fact-desc">아래 양식을 작성 후 버튼을 누르면 이메일 프로그램이 열립니다. 내용을 확인하신 후 전송해 주시면 빠르게 답변드리겠습니다.<br>
-            버튼이 작동하지 않으면 <a href="mailto:chu9527@nate.com" class="contact-email-link">chu9527@nate.com</a>으로 직접 메일 보내주세요.</p>
+            <p class="fact-desc">아래 양식을 작성 후 제출하시면 담당자에게 바로 전달됩니다.<br>
+            제출이 되지 않으면 <a href="mailto:chu9527@nate.com" class="contact-email-link">chu9527@nate.com</a>으로 직접 메일 보내주세요.</p>
           </div>
         </div>
       </div>
 
-      <form id="contactForm" novalidate>
+      <form id="contactForm" action="contact.php" method="POST" novalidate>
         <div id="formMsg" role="status"></div>
 
         <div class="form-row">
@@ -699,7 +699,7 @@
         </div>
 
         <button type="submit" class="btn btn-primary" id="submitBtn">프로그램 제안·요청 보내기</button>
-        <p class="form-fallback">버튼을 눌러도 메일 프로그램이 열리지 않으면 <a href="mailto:chu9527@nate.com">chu9527@nate.com</a>으로 직접 문의해 주세요.</p>
+        <p class="form-fallback">제출이 되지 않으면 <a href="mailto:chu9527@nate.com">chu9527@nate.com</a>으로 직접 문의해 주세요.</p>
       </form>
     </div>
   </section>
@@ -738,54 +738,53 @@
   // 푸터 연도 자동 표시
   document.getElementById('year').textContent = new Date().getFullYear();
 
-  // 문의 폼 제출 (GitHub Pages 등 정적 호스팅 대응: mailto로 기본 이메일 프로그램 실행)
-  // 추후 PHP 호스팅으로 옮기면 contact.php + fetch 방식으로 되돌릴 수 있습니다.
+  // 문의 폼 제출 (contact.php로 fetch 전송, JSON 응답 처리)
   var form = document.getElementById('contactForm');
   var formMsg = document.getElementById('formMsg');
-  var RECIPIENT_EMAIL = 'chu9527@nate.com';
+  var submitBtn = document.getElementById('submitBtn');
+  var submitBtnDefaultText = submitBtn.textContent;
 
   form.addEventListener('submit', function(e){
     e.preventDefault();
-
-    // 허니팟 필드가 채워져 있으면 봇으로 간주하고 조용히 무시
-    var honeypot = document.getElementById('website');
-    if (honeypot && honeypot.value) {
-      return;
-    }
 
     if (!form.checkValidity()) {
       form.reportValidity();
       return;
     }
 
-    var name = document.getElementById('name').value.trim();
-    var organization = document.getElementById('organization').value.trim();
-    var phone = document.getElementById('phone').value.trim();
-    var email = document.getElementById('email').value.trim();
-    var inquiryType = document.getElementById('inquiry_type').value;
-    var message = document.getElementById('message').value.trim();
+    formMsg.className = '';
+    submitBtn.disabled = true;
+    submitBtn.textContent = '전송 중...';
 
-    var subject = '[인생설계가이드 홈페이지] ' + inquiryType + ' - ' + name;
-    var bodyLines = [
-      '이름   : ' + name,
-      '소속   : ' + (organization || '(미입력)'),
-      '연락처 : ' + phone,
-      '이메일 : ' + email,
-      '',
-      '문의 내용',
-      message
-    ];
-    var body = bodyLines.join('\n');
-
-    var mailtoUrl = 'mailto:' + RECIPIENT_EMAIL
-      + '?subject=' + encodeURIComponent(subject)
-      + '&body=' + encodeURIComponent(body);
-
-    window.location.href = mailtoUrl;
-
-    formMsg.textContent = '이메일 프로그램이 열립니다. 내용을 확인하신 후 전송해 주세요.';
-    formMsg.className = 'show success';
-    formMsg.scrollIntoView({ behavior:'smooth', block:'nearest' });
+    fetch(form.action, {
+      method: 'POST',
+      headers: { 'X-Requested-With': 'XMLHttpRequest' },
+      body: new FormData(form)
+    })
+    .then(function(res){
+      return res.json().catch(function(){
+        return { ok: false, message: '서버 응답을 처리할 수 없습니다. chu9527@nate.com으로 직접 문의해 주세요.' };
+      });
+    })
+    .then(function(data){
+      if (data.ok) {
+        formMsg.textContent = data.message || '문의가 정상적으로 접수되었습니다. 감사합니다.';
+        formMsg.className = 'show success';
+        form.reset();
+      } else {
+        formMsg.textContent = data.message || '문의 접수 중 오류가 발생했습니다. 잠시 후 다시 시도해 주세요.';
+        formMsg.className = 'show error';
+      }
+    })
+    .catch(function(){
+      formMsg.textContent = '네트워크 오류로 문의를 보내지 못했습니다. chu9527@nate.com으로 직접 문의해 주세요.';
+      formMsg.className = 'show error';
+    })
+    .finally(function(){
+      submitBtn.disabled = false;
+      submitBtn.textContent = submitBtnDefaultText;
+      formMsg.scrollIntoView({ behavior:'smooth', block:'nearest' });
+    });
   });
 </script>
 
