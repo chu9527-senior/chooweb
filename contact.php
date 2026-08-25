@@ -128,7 +128,7 @@ $body = implode("\n", $bodyLines);
 $encodedSubject = '=?UTF-8?B?' . base64_encode($subject) . '?=';
 
 $headers = [
-    'From: ' . SITE_NAME . ' 웹사이트 <no-reply@lifetimes.co.kr>',
+    'From: ' . SITE_NAME . ' 웹사이트 <no-reply@lifetimes.kr>',
     'Reply-To: ' . $email,
     'MIME-Version: 1.0',
     'Content-Type: text/plain; charset=UTF-8',

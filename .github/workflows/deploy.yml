@@ -1,4 +1,4 @@
-name: Deploy to lifetimes.co.kr (hosting.kr)
+name: Deploy to lifetimes.kr (hosting.kr)
 
 on:
   push:
