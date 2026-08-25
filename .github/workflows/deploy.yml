@@ -13,14 +13,14 @@ jobs:
       - name: 저장소 코드 가져오기
         uses: actions/checkout@v4
 
-      - name: FTP로 public_html에 업로드
+      - name: FTP로 lifetimes.kr 문서 루트에 업로드
         uses: SamKirkland/FTP-Deploy-Action@v4.3.5
         with:
           server: ${{ secrets.FTP_SERVER }}
           username: ${{ secrets.FTP_USERNAME }}
           password: ${{ secrets.FTP_PASSWORD }}
           protocol: ftps
-          server-dir: /public_html/
+          server-dir: /public_html/lifetimes.kr/
           # 서버에 이미 있는 파일(예: db_config.php)은 지우지 않고, 아래 목록만 동기화합니다.
           dangerous-clean-slate: false
           exclude: |
