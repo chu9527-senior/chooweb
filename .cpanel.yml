@@ -1,0 +1,8 @@
+---
+deployment:
+  tasks:
+    - export DEPLOYPATH=/home/hkbbj1jvjxxokg1q/public_html/lifetimes.kr/
+    - /bin/cp -f index.html $DEPLOYPATH
+    - /bin/cp -f contact.php $DEPLOYPATH
+    - /bin/mkdir -p $DEPLOYPATH/images
+    - /bin/cp -rf images/. $DEPLOYPATH/images/
