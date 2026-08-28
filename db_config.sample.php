@@ -13,3 +13,6 @@ define('DB_HOST', 'localhost');
 define('DB_NAME', 'cpanel사용자명_데이터베이스명');
 define('DB_USER', 'cpanel사용자명_DB사용자명');
 define('DB_PASS', '실제_DB_비밀번호');
+
+// admin.php(문의 내역 관리 페이지) 접속 비밀번호. 직접 원하는 값으로 바꿔주세요.
+define('ADMIN_PASSWORD', '관리자_페이지_비밀번호');
