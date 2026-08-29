@@ -646,14 +646,6 @@
         <span class="section-label">Contact</span>
         <h2 class="section-title">강연 · 저서 문의</h2>
         <p class="section-desc">강연 섭외, 저서 관련 문의, 협업 제안 등 아래 양식으로 편하게 연락 주세요. 확인 후 빠르게 답변드리겠습니다.</p>
-        <div class="fact-item">
-          <div class="fact-icon">@</div>
-          <div>
-            <p class="fact-title">이메일 문의</p>
-            <p class="fact-desc">아래 양식을 작성 후 제출하시면 담당자에게 바로 전달됩니다.<br>
-            제출이 되지 않으면 <a href="mailto:chu9527@nate.com" class="contact-email-link">chu9527@nate.com</a>으로 직접 메일 보내주세요.</p>
-          </div>
-        </div>
       </div>
 
       <form id="contactForm" action="contact.php" method="POST" novalidate>
@@ -770,7 +762,7 @@
     })
     .then(function(data){
       if (data.ok) {
-        formMsg.textContent = data.message || '문의가 정상적으로 접수되었습니다. 감사합니다.';
+        formMsg.textContent = data.message || '제안과 요청이 접수되었습니다.';
         formMsg.className = 'show success';
         form.reset();
       } else {

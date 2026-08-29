@@ -32,7 +32,7 @@ if ($_SERVER['REQUEST_METHOD'] !== 'POST') {
 // 사람 눈에는 보이지 않는 필드이므로, 값이 채워져 있으면 봇으로 간주하고
 // 스팸을 보낸 쪽에게는 성공한 것처럼 보이도록 조용히 종료합니다.
 if (!empty($_POST['website'])) {
-    respond(true, '문의가 정상적으로 접수되었습니다. 감사합니다.');
+    respond(true, '제안과 요청이 접수되었습니다.');
 }
 
 // ---- 입력값 수집 및 정리 ----------------------------------------------
@@ -142,8 +142,42 @@ $sent = @mail(
     implode("\r\n", $headers)
 );
 
+// ---- 접수자 본인에게 확인 메일 발송 (실패해도 전체 처리는 계속 진행) ------------
 if ($sent) {
-    respond(true, '문의가 정상적으로 접수되었습니다. 빠른 시일 내에 답변드리겠습니다.');
+    $confirmSubject = '[' . SITE_NAME . '] 제안과 요청이 접수되었습니다';
+
+    $confirmBodyLines = [
+        $name . '님, 안녕하세요.',
+        '',
+        SITE_NAME . '(추영준)에 남겨주신 제안과 요청이 정상적으로 접수되었습니다.',
+        '빠른 시일 내에 내용을 확인 후 답변드리겠습니다.',
+        '',
+        '----------------------------------------',
+        '문의 유형 : ' . $inquiryType,
+        '이름      : ' . $name,
+        '소속      : ' . ($organization !== '' ? $organization : '(미입력)'),
+        '연락처    : ' . $phone,
+        '',
+        '문의 내용',
+        $message,
+        '----------------------------------------',
+        '',
+        '본 메일은 발신 전용입니다. 추가 문의사항은 ' . RECIPIENT_EMAIL . ' 으로 회신해 주세요.',
+    ];
+    $confirmBody = implode("\n", $confirmBodyLines);
+    $confirmEncodedSubject = '=?UTF-8?B?' . base64_encode($confirmSubject) . '?=';
+
+    $confirmHeaders = [
+        'From: ' . SITE_NAME . ' <no-reply@lifetimes.kr>',
+        'Reply-To: ' . RECIPIENT_EMAIL,
+        'MIME-Version: 1.0',
+        'Content-Type: text/plain; charset=UTF-8',
+        'Content-Transfer-Encoding: 8bit',
+    ];
+
+    @mail($email, $confirmEncodedSubject, $confirmBody, implode("\r\n", $confirmHeaders));
+
+    respond(true, '제안과 요청이 접수되었습니다. 빠른 시일 내에 답변드리겠습니다.');
 }
 
 respond(false, '메일 발송 중 오류가 발생했습니다. 잠시 후 다시 시도해 주세요.', 500);
