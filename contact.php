@@ -3,22 +3,13 @@
  * 추영준(인생설계가이드) 홍보 웹사이트 - 문의 폼 처리 스크립트
  * 호스팅케이알(hosting.kr) cPanel PHP + MySQL 환경에서 동작합니다.
  *
- * 처리 순서: 입력값 검증 -> DB 저장(inquiries 테이블) -> 이메일 발송
- * db_config.php가 없거나 DB 접속에 실패해도 이메일 발송은 계속 진행됩니다.
+ * 처리 순서: 입력값 검증 -> DB 저장(inquiries 테이블) -> 이메일 발송(Brevo API)
+ * 이 호스팅 요금제는 PHP mail() 함수가 비활성화되어 있어, Brevo(무료 이메일 API)를
+ * 통해 이메일을 발송합니다. db_config.php에 BREVO_API_KEY, BREVO_SENDER_EMAIL이
+ * 필요합니다. (설정이 없거나 실패해도 DB 저장은 계속 진행됩니다.)
  */
 
 declare(strict_types=1);
-
-// ---- 진단용 임시 오류 핸들러 (문제 해결 후 제거 예정) -----------------------
-set_exception_handler(function (Throwable $e) {
-    error_log('[contact.php] Uncaught: ' . $e->getMessage());
-    http_response_code(500);
-    header('Content-Type: application/json; charset=utf-8');
-    echo json_encode(
-        ['ok' => false, 'message' => '[진단] ' . $e->getMessage() . ' (' . $e->getFile() . ':' . $e->getLine() . ')'],
-        JSON_UNESCAPED_UNICODE
-    );
-});
 
 // ---- 설정 ----------------------------------------------------------
 const RECIPIENT_EMAIL = 'chu9527@nate.com';
@@ -32,6 +23,80 @@ function respond(bool $ok, string $message, int $httpCode = 200): void
     header('Content-Type: application/json; charset=utf-8');
     echo json_encode(['ok' => $ok, 'message' => $message], JSON_UNESCAPED_UNICODE);
     exit;
+}
+
+// ---- Brevo API로 이메일 발송 -------------------------------------------
+// db_config.php에 BREVO_API_KEY / BREVO_SENDER_EMAIL 이 정의되어 있어야 동작합니다.
+function sendViaBrevo(string $toEmail, string $toName, string $subject, string $textBody, ?string $replyTo = null): bool
+{
+    if (!defined('BREVO_API_KEY') || !defined('BREVO_SENDER_EMAIL')) {
+        error_log('[contact.php] BREVO_API_KEY 또는 BREVO_SENDER_EMAIL이 설정되지 않았습니다.');
+        return false;
+    }
+
+    $payload = [
+        'sender'      => ['name' => SITE_NAME, 'email' => BREVO_SENDER_EMAIL],
+        'to'          => [['email' => $toEmail, 'name' => $toName]],
+        'subject'     => $subject,
+        'textContent' => $textBody,
+    ];
+    if ($replyTo !== null) {
+        $payload['replyTo'] = ['email' => $replyTo];
+    }
+
+    $jsonPayload = json_encode($payload, JSON_UNESCAPED_UNICODE);
+    $headers = [
+        'api-key: ' . BREVO_API_KEY,
+        'Content-Type: application/json',
+        'Accept: application/json',
+    ];
+
+    if (function_exists('curl_init')) {
+        $ch = curl_init('https://api.brevo.com/v3/smtp/email');
+        curl_setopt_array($ch, [
+            CURLOPT_POST           => true,
+            CURLOPT_POSTFIELDS     => $jsonPayload,
+            CURLOPT_HTTPHEADER     => $headers,
+            CURLOPT_RETURNTRANSFER => true,
+            CURLOPT_TIMEOUT        => 15,
+        ]);
+        $response = curl_exec($ch);
+        $statusCode = (int) curl_getinfo($ch, CURLINFO_HTTP_CODE);
+        $curlError = curl_error($ch);
+        curl_close($ch);
+
+        if ($response === false) {
+            error_log('[contact.php] Brevo cURL 오류: ' . $curlError);
+            return false;
+        }
+    } else {
+        // cURL 확장이 없을 경우를 대비한 대체 수단
+        $context = stream_context_create([
+            'http' => [
+                'method'  => 'POST',
+                'header'  => implode("\r\n", $headers) . "\r\n",
+                'content' => $jsonPayload,
+                'timeout' => 15,
+                'ignore_errors' => true,
+            ],
+        ]);
+        $response = @file_get_contents('https://api.brevo.com/v3/smtp/email', false, $context);
+        $statusCode = 0;
+        if (isset($http_response_header[0]) && preg_match('/\s(\d{3})\s/', $http_response_header[0], $m)) {
+            $statusCode = (int) $m[1];
+        }
+        if ($response === false) {
+            error_log('[contact.php] Brevo 요청 실패 (file_get_contents)');
+            return false;
+        }
+    }
+
+    if ($statusCode < 200 || $statusCode >= 300) {
+        error_log('[contact.php] Brevo 발송 실패 (HTTP ' . $statusCode . '): ' . $response);
+        return false;
+    }
+
+    return true;
 }
 
 // ---- 요청 방식 확인 ---------------------------------------------------
@@ -116,7 +181,7 @@ if (file_exists($dbConfigPath)) {
     }
 }
 
-// ---- 메일 발송 ---------------------------------------------------------
+// ---- 관리자에게 알림 메일 발송 (Brevo) -----------------------------------
 $subject = '[' . SITE_NAME . '] 새 문의: ' . $inquiryType . ' - ' . $name;
 
 $bodyLines = [
@@ -136,22 +201,7 @@ $bodyLines = [
 ];
 $body = implode("\n", $bodyLines);
 
-$encodedSubject = '=?UTF-8?B?' . base64_encode($subject) . '?=';
-
-$headers = [
-    'From: ' . SITE_NAME . ' 웹사이트 <no-reply@lifetimes.kr>',
-    'Reply-To: ' . $email,
-    'MIME-Version: 1.0',
-    'Content-Type: text/plain; charset=UTF-8',
-    'Content-Transfer-Encoding: 8bit',
-];
-
-$sent = @mail(
-    RECIPIENT_EMAIL,
-    $encodedSubject,
-    $body,
-    implode("\r\n", $headers)
-);
+$sent = sendViaBrevo(RECIPIENT_EMAIL, '추영준', $subject, $body, $email);
 
 // ---- 접수자 본인에게 확인 메일 발송 (실패해도 전체 처리는 계속 진행) ------------
 if ($sent) {
@@ -187,17 +237,8 @@ if ($sent) {
         '본 메일은 발신 전용입니다.',
     ];
     $confirmBody = implode("\n", $confirmBodyLines);
-    $confirmEncodedSubject = '=?UTF-8?B?' . base64_encode($confirmSubject) . '?=';
 
-    $confirmHeaders = [
-        'From: ' . SITE_NAME . ' <no-reply@lifetimes.kr>',
-        'Reply-To: ' . RECIPIENT_EMAIL,
-        'MIME-Version: 1.0',
-        'Content-Type: text/plain; charset=UTF-8',
-        'Content-Transfer-Encoding: 8bit',
-    ];
-
-    @mail($email, $confirmEncodedSubject, $confirmBody, implode("\r\n", $confirmHeaders));
+    sendViaBrevo($email, $name, $confirmSubject, $confirmBody, RECIPIENT_EMAIL);
 
     respond(true, '제안과 요청이 접수되었습니다. 빠른 시일 내에 답변드리겠습니다.');
 }

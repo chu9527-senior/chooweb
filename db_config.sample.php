@@ -16,3 +16,10 @@ define('DB_PASS', '실제_DB_비밀번호');
 
 // admin.php(문의 내역 관리 페이지) 접속 비밀번호. 직접 원하는 값으로 바꿔주세요.
 define('ADMIN_PASSWORD', '관리자_페이지_비밀번호');
+
+// Brevo(이메일 발송 API) 설정 - hosting.kr의 PHP mail() 함수가 비활성화되어 있어 사용합니다.
+// 1) https://www.brevo.com 무료 가입
+// 2) Senders, Domains & Dedicated IPs > Senders 에서 발신자 이메일(chu9527@nate.com) 등록 및 인증
+// 3) SMTP & API > API Keys 에서 API 키 생성
+define('BREVO_API_KEY', '실제_Brevo_API_키');
+define('BREVO_SENDER_EMAIL', 'chu9527@nate.com');
