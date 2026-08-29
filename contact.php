@@ -9,6 +9,17 @@
 
 declare(strict_types=1);
 
+// ---- 진단용 임시 오류 핸들러 (문제 해결 후 제거 예정) -----------------------
+set_exception_handler(function (Throwable $e) {
+    error_log('[contact.php] Uncaught: ' . $e->getMessage());
+    http_response_code(500);
+    header('Content-Type: application/json; charset=utf-8');
+    echo json_encode(
+        ['ok' => false, 'message' => '[진단] ' . $e->getMessage() . ' (' . $e->getFile() . ':' . $e->getLine() . ')'],
+        JSON_UNESCAPED_UNICODE
+    );
+});
+
 // ---- 설정 ----------------------------------------------------------
 const RECIPIENT_EMAIL = 'chu9527@nate.com';
 const SITE_NAME       = '인생설계가이드';
