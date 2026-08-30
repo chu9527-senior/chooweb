@@ -3,3 +3,5 @@ Thumbs.db
 *.log
 .vscode/
 db_config.php
+.claude/
+skills-lock.json

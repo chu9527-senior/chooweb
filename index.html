@@ -5,6 +5,8 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>인생설계가이드 | 추영준 - 인생설계 · 새로운 출발·두 번째 도약 전문가</title>
 <meta name="description" content="추영준(인생설계가이드) - 인생설계 및 새로운 출발·두 번째 도약·리스킬링 강연, 저서 소개. 경희대학교 대학원 박사 수료, 중앙일보 사업부장 약 20년 경력.">
+<meta name="theme-color" content="#faf7f2">
+<script>document.documentElement.classList.add('js');</script>
 <link rel="preconnect" href="https://cdn.jsdelivr.net">
 <link rel="stylesheet" as="style" crossorigin href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard.css">
 <style>
@@ -32,10 +34,62 @@
     background:var(--color-bg);
     line-height:1.7;
     word-break:keep-all;
+    -webkit-tap-highlight-color:transparent;
   }
   img{max-width:100%;display:block;}
   a{color:inherit;text-decoration:none;}
   ul{list-style:none;margin:0;padding:0;}
+
+  /* 스킵 링크: 키보드/스크린리더 사용자가 내비게이션을 건너뛰고 본문으로 바로 이동 */
+  .skip-link{
+    position:absolute;
+    left:12px;
+    top:-100px;
+    background:var(--color-navy);
+    color:var(--color-white);
+    padding:12px 18px;
+    border-radius:8px;
+    font-weight:700;
+    font-size:0.9rem;
+    z-index:1000;
+    transition:top .15s ease;
+  }
+  .skip-link:focus{top:12px;}
+
+  /* 포커스 표시: 키보드 사용자를 위한 명확한 포커스 링 */
+  .btn:focus-visible,
+  .nav-menu a:focus-visible,
+  .hamburger:focus-visible,
+  .mobile-menu a:focus-visible,
+  .footer-links a:focus-visible,
+  .brand:focus-visible{
+    outline:2px solid var(--color-gold);
+    outline-offset:3px;
+    border-radius:6px;
+  }
+
+  @media (prefers-reduced-motion: reduce){
+    html{scroll-behavior:auto;}
+    *,*::before,*::after{
+      animation-duration:0.01ms !important;
+      animation-iteration-count:1 !important;
+      transition-duration:0.01ms !important;
+      scroll-behavior:auto !important;
+    }
+  }
+
+  /* 스크롤 시 콘텐츠가 은은하게 나타나는 효과 (절제된 모션)
+     .js 클래스가 있을 때만(=JS가 정상 실행됐을 때만) 숨김 처리 - JS 오류/비활성화 시에도
+     콘텐츠가 계속 보이도록 하는 안전장치 */
+  .js .reveal{
+    opacity:0;
+    transform:translateY(16px);
+    transition:opacity .6s ease, transform .6s ease;
+  }
+  .js .reveal.in-view{
+    opacity:1;
+    transform:translateY(0);
+  }
   .container{
     width:100%;
     max-width:var(--max-width);
@@ -76,6 +130,8 @@
     cursor:pointer;
     border:2px solid transparent;
     transition:transform .15s ease, box-shadow .15s ease, background .15s ease;
+    touch-action:manipulation;
+    white-space:nowrap;
   }
   .btn:active{transform:scale(0.97);}
   .btn-primary{
@@ -323,6 +379,8 @@
   }
   .book-cover img{
     width:100%;
+    aspect-ratio:2/3;
+    object-fit:cover;
     border-radius:8px;
     box-shadow:0 8px 20px rgba(28,43,69,0.18);
     display:block;
@@ -473,7 +531,7 @@
     .hero-title{font-size:2.7rem;}
     .hero-sub{font-size:1.15rem;}
     .about-grid{grid-template-columns:1fr 1fr;}
-    .book-grid{grid-template-columns:repeat(3,1fr);}
+    .book-grid{grid-template-columns:repeat(2,1fr);}
     .topic-grid{grid-template-columns:1fr 1fr;}
     .contact-wrap{grid-template-columns:0.9fr 1.1fr;align-items:start;}
     .nav-menu{display:flex;}
@@ -493,6 +551,8 @@
 </style>
 </head>
 <body>
+
+<a href="#top" class="skip-link">본문으로 바로가기</a>
 
 <header>
   <div class="container nav-wrap">
@@ -525,9 +585,7 @@
       <div class="hero-copy">
         <span class="section-label">인생설계가이드 · 추영준</span>
         <h1 class="hero-title">당신의 남은 인생,<br><em>어떻게 설계</em>하시겠습니까?</h1>
-        <p class="hero-sub">인생설계와 새로운 출발·두 번째 도약·리스킬링을 함께 고민하는 강연가이자 저자, 추영준입니다.<br class="hide-mobile">
-        경희대학교 대학원 박사 수료, 중앙일보 사업부장 약 20년의 경험을 바탕으로<br class="hide-mobile">
-        더 나은 삶의 방향을 안내합니다.</p>
+        <p class="hero-sub">인생설계와 새로운 출발·두 번째 도약을 함께 고민하는 강연가이자 저자, 추영준입니다.</p>
         <div class="hero-actions">
           <a href="#contact" class="btn btn-primary">강연 문의하기</a>
           <a href="#books" class="btn btn-outline">저서 보기</a>
@@ -541,35 +599,34 @@
 
   <!-- About -->
   <section class="about" id="about">
-    <div class="container">
-      <span class="section-label">About</span>
+    <div class="container reveal">
       <h2 class="section-title">추영준 소개</h2>
       <p class="section-desc">오랜 시간 현장에서 쌓아온 경험을 바탕으로, 인생 후반을 준비하는 이들에게 실질적인 방향을 제시합니다.</p>
       <div class="about-grid">
         <div class="fact-list">
           <div class="fact-item">
-            <div class="fact-icon">학</div>
+            <div class="fact-icon" aria-hidden="true">학</div>
             <div>
               <p class="fact-title">학력</p>
               <p class="fact-desc">경희대학교 대학원 박사 수료</p>
             </div>
           </div>
           <div class="fact-item">
-            <div class="fact-icon">경</div>
+            <div class="fact-icon" aria-hidden="true">경</div>
             <div>
               <p class="fact-title">경력</p>
               <p class="fact-desc">중앙일보 헬스·문화·교육 부문 사업부장 약 20년<br>(전략사업팀, 마케팅팀장 등 역임)</p>
             </div>
           </div>
           <div class="fact-item">
-            <div class="fact-icon">현</div>
+            <div class="fact-icon" aria-hidden="true">현</div>
             <div>
               <p class="fact-title">현재</p>
               <p class="fact-desc">마이북클럽 출판사 대표<br>한국열린사이버대학교 특임교수 (~2025년)</p>
             </div>
           </div>
           <div class="fact-item">
-            <div class="fact-icon">수</div>
+            <div class="fact-icon" aria-hidden="true">수</div>
             <div>
               <p class="fact-title">수상</p>
               <p class="fact-desc">서울시장 표창, 중앙일보 공로상</p>
@@ -594,21 +651,20 @@
 
   <!-- Books -->
   <section class="books" id="books">
-    <div class="container">
-      <span class="section-label">Books</span>
+    <div class="container reveal">
       <h2 class="section-title">저서</h2>
       <p class="section-desc">글쓰기, 취업, 웰니스, 조직문화, 그리고 인생 전반을 다룬 책을 통해 독자와 만나고 있습니다.</p>
       <div class="book-grid">
         <div class="book-card">
-          <div class="book-cover"><img src="images/book-writing.jpg" alt="『글쓰기가 막막한 당신에게』 표지"></div>
+          <div class="book-cover"><img src="images/book-writing.jpg" alt="『글쓰기가 막막한 당신에게』 표지" loading="lazy" width="300" height="450"></div>
           <p class="book-title">글쓰기가 막막한 당신에게</p>
         </div>
         <div class="book-card">
-          <div class="book-cover"><img src="images/book-essay.jpg" alt="『합격 자소서 특강』 표지"></div>
+          <div class="book-cover"><img src="images/book-essay.jpg" alt="『합격 자소서 특강』 표지" loading="lazy" width="300" height="450"></div>
           <p class="book-title">합격 자소서 특강</p>
         </div>
         <div class="book-card">
-          <div class="book-cover"><img src="images/book-wellness.jpg" alt="『2026 웰니스 치유 트렌드』 표지"></div>
+          <div class="book-cover"><img src="images/book-wellness.jpg" alt="『2026 웰니스 치유 트렌드』 표지" loading="lazy" width="300" height="450"></div>
           <p class="book-title">2026 웰니스 치유 트렌드</p>
         </div>
         <div class="book-card">
@@ -622,8 +678,7 @@
 
   <!-- Speaking topics -->
   <section class="topics" id="topics">
-    <div class="container">
-      <span class="section-label">Lecture</span>
+    <div class="container reveal">
       <h2 class="section-title">강연 분야</h2>
       <p class="section-desc">개인, 기업, 기관 대상으로 인생설계와 새로운 출발·두 번째 도약·리스킬링 강연을 진행합니다.</p>
       <div class="topic-grid">
@@ -641,9 +696,8 @@
 
   <!-- Contact -->
   <section class="contact" id="contact">
-    <div class="container contact-wrap">
+    <div class="container contact-wrap reveal">
       <div class="contact-info">
-        <span class="section-label">Contact</span>
         <h2 class="section-title">강연 · 저서 문의</h2>
         <p class="section-desc">강연 섭외, 저서 관련 문의, 협업 제안 등 아래 양식으로 편하게 연락 주세요. 확인 후 빠르게 답변드리겠습니다.</p>
       </div>
@@ -653,7 +707,7 @@
 
         <div class="form-row">
           <label for="name">이름 <span aria-hidden="true">*</span></label>
-          <input type="text" id="name" name="name" required autocomplete="name" placeholder="성함을 입력해 주세요">
+          <input type="text" id="name" name="name" required autocomplete="name" placeholder="성함을 입력해 주세요…">
         </div>
 
         <div class="form-row">
@@ -663,12 +717,12 @@
 
         <div class="form-row">
           <label for="phone">연락처 <span aria-hidden="true">*</span></label>
-          <input type="tel" id="phone" name="phone" required autocomplete="tel" placeholder="010-0000-0000">
+          <input type="tel" id="phone" name="phone" required autocomplete="tel" inputmode="tel" placeholder="010-0000-0000">
         </div>
 
         <div class="form-row">
           <label for="email">이메일 <span aria-hidden="true">*</span></label>
-          <input type="email" id="email" name="email" required autocomplete="email" placeholder="example@email.com">
+          <input type="email" id="email" name="email" required autocomplete="email" spellcheck="false" placeholder="example@email.com">
         </div>
 
         <div class="form-row">
@@ -683,7 +737,7 @@
 
         <div class="form-row">
           <label for="message">문의 내용 <span aria-hidden="true">*</span></label>
-          <textarea id="message" name="message" rows="5" required placeholder="문의하실 내용을 자유롭게 남겨주세요"></textarea>
+          <textarea id="message" name="message" rows="5" required placeholder="문의하실 내용을 자유롭게 남겨주세요…"></textarea>
         </div>
 
         <!-- 스팸 방지용 허니팟 필드: 사람 눈에는 보이지 않고, 봇만 채우는 함정 필드 -->
@@ -732,6 +786,31 @@
   // 푸터 연도 자동 표시
   document.getElementById('year').textContent = new Date().getFullYear();
 
+  // 스크롤 시 섹션이 은은하게 나타나는 효과 (prefers-reduced-motion 사용자는 즉시 표시)
+  try {
+    var prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    var revealEls = document.querySelectorAll('.reveal');
+    if (prefersReducedMotion || !('IntersectionObserver' in window)) {
+      revealEls.forEach(function(el){ el.classList.add('in-view'); });
+    } else {
+      var revealObserver = new IntersectionObserver(function(entries){
+        entries.forEach(function(entry){
+          if (entry.isIntersecting) {
+            entry.target.classList.add('in-view');
+            revealObserver.unobserve(entry.target);
+          }
+        });
+      }, { threshold: 0.15 });
+      revealEls.forEach(function(el){ revealObserver.observe(el); });
+      // 안전장치: 혹시 옵저버가 어떤 이유로든 동작하지 않을 경우를 대비해 일정 시간 후 강제 표시
+      setTimeout(function(){
+        revealEls.forEach(function(el){ el.classList.add('in-view'); });
+      }, 4000);
+    }
+  } catch (err) {
+    document.querySelectorAll('.reveal').forEach(function(el){ el.classList.add('in-view'); });
+  }
+
   // 문의 폼 제출 (contact.php로 fetch 전송, JSON 응답 처리)
   var form = document.getElementById('contactForm');
   var formMsg = document.getElementById('formMsg');
@@ -748,7 +827,7 @@
 
     formMsg.className = '';
     submitBtn.disabled = true;
-    submitBtn.textContent = '전송 중...';
+    submitBtn.textContent = '전송 중…';
 
     fetch(form.action, {
       method: 'POST',
