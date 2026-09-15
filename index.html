@@ -133,7 +133,8 @@
     touch-action:manipulation;
     white-space:nowrap;
   }
-  .btn:active{transform:scale(0.97);}
+  .btn:hover{transform:translateY(-3px);box-shadow:0 12px 22px rgba(28,43,69,0.22);}
+  .btn:active{transform:translateY(-1px) scale(0.97);}
   .btn-primary{
     background:var(--color-navy);
     color:var(--color-white);
@@ -270,7 +271,55 @@
     width:100%;
     height:100%;
     object-fit:cover;
+    object-position:50% 12%;
     display:block;
+  }
+
+  /* Showcase banners */
+  .showcase{
+    position:relative;
+    height:280px;
+    overflow:hidden;
+  }
+  .showcase img{
+    width:100%;
+    height:100%;
+    object-fit:cover;
+    display:block;
+  }
+  .showcase-lecture img{object-position:50% 20%;}
+  .showcase-lifenote img{object-position:50% 35%;}
+  .showcase::after{
+    content:"";
+    position:absolute;
+    inset:0;
+    background:linear-gradient(180deg,rgba(28,43,69,0.05) 0%,rgba(28,43,69,0.85) 100%);
+  }
+  .showcase-caption{
+    position:absolute;
+    left:0;
+    right:0;
+    bottom:0;
+    z-index:1;
+    padding:22px 0 26px;
+    color:var(--color-white);
+  }
+  .showcase-eyebrow{
+    display:inline-block;
+    font-size:0.76rem;
+    font-weight:700;
+    letter-spacing:0.04em;
+    background:var(--color-gold);
+    color:var(--color-navy);
+    padding:4px 12px;
+    border-radius:999px;
+    margin-bottom:10px;
+  }
+  .showcase-caption h2{
+    margin:0;
+    font-size:1.25rem;
+    line-height:1.45;
+    max-width:520px;
   }
 
   /* Profile / About */
@@ -383,6 +432,108 @@
     border-radius:8px;
     box-shadow:0 8px 20px rgba(28,43,69,0.18);
     display:block;
+    transition:transform .2s ease, box-shadow .2s ease;
+  }
+  .book-link{
+    display:flex;
+    flex-direction:column;
+    gap:10px;
+    text-decoration:none;
+    color:inherit;
+  }
+  .book-link:hover .book-cover img{
+    transform:translateY(-4px);
+    box-shadow:0 14px 26px rgba(28,43,69,0.26);
+  }
+  .book-link:hover .book-title{color:var(--color-gold);}
+  .book-buy{
+    font-size:0.82rem;
+    font-weight:700;
+    color:var(--color-gold);
+  }
+
+  /* Programs */
+  .programs{background:var(--color-bg-alt);}
+  .program-grid{
+    display:grid;
+    grid-template-columns:1fr;
+    gap:24px;
+  }
+  .program-card{
+    background:var(--color-white);
+    border-radius:var(--radius);
+    box-shadow:var(--shadow);
+    padding:28px 26px;
+    display:flex;
+    flex-direction:column;
+    gap:16px;
+    border-top:4px solid var(--color-gold);
+  }
+  .program-card.track-65{border-top-color:var(--color-navy-light);}
+  .program-eyebrow{
+    display:inline-block;
+    align-self:flex-start;
+    font-size:0.78rem;
+    font-weight:700;
+    letter-spacing:0.04em;
+    color:var(--color-white);
+    background:var(--color-navy);
+    padding:4px 12px;
+    border-radius:999px;
+  }
+  .program-card.track-65 .program-eyebrow{background:var(--color-navy-light);}
+  .program-card h3{
+    margin:0;
+    font-size:1.3rem;
+    color:var(--color-navy);
+  }
+  .program-desc{
+    margin:0;
+    font-size:0.95rem;
+    line-height:1.6;
+    color:var(--color-text-muted);
+  }
+  .program-stages{
+    display:flex;
+    flex-wrap:wrap;
+    gap:8px;
+  }
+  .stage-chip{
+    font-size:0.82rem;
+    font-weight:600;
+    color:var(--color-navy);
+    background:var(--color-bg-alt);
+    border:1px solid rgba(28,43,69,0.12);
+    padding:6px 12px;
+    border-radius:999px;
+  }
+  .program-outcomes{
+    list-style:none;
+    margin:0;
+    padding:0;
+    display:flex;
+    flex-direction:column;
+    gap:8px;
+  }
+  .program-outcomes li{
+    font-size:0.92rem;
+    color:var(--color-text);
+    padding-left:22px;
+    position:relative;
+  }
+  .program-outcomes li::before{
+    content:"✓";
+    position:absolute;
+    left:0;
+    color:var(--color-gold);
+    font-weight:700;
+  }
+  .program-format{
+    font-size:0.85rem;
+    color:var(--color-text-muted);
+    border-top:1px solid rgba(28,43,69,0.08);
+    padding-top:14px;
+    margin:0;
   }
 
   /* Speaking topics */
@@ -533,6 +684,9 @@
     .book-grid{grid-template-columns:repeat(2,1fr);}
     .topic-grid{grid-template-columns:1fr 1fr;}
     .topic-card-wide{grid-column:1 / -1;}
+    .program-grid{grid-template-columns:1fr 1fr;}
+    .showcase{height:420px;}
+    .showcase-caption h2{font-size:1.7rem;}
     .contact-wrap{grid-template-columns:0.9fr 1.1fr;align-items:start;}
     .nav-menu{display:flex;}
     .nav-cta{display:inline-flex;}
@@ -559,6 +713,7 @@
     <a href="#top" class="brand">인생설계<span>가이드</span></a>
     <nav class="nav-menu" aria-label="주요 메뉴">
       <a href="#about">소개</a>
+      <a href="#programs">프로그램</a>
       <a href="#books">저서</a>
       <a href="#topics">강연분야</a>
       <a href="#contact">문의</a>
@@ -570,6 +725,7 @@
   </div>
   <div class="container mobile-menu" id="mobileMenu">
     <a href="#about">소개</a>
+    <a href="#programs">프로그램</a>
     <a href="#books">저서</a>
     <a href="#topics">강연분야</a>
     <a href="#contact">문의</a>
@@ -594,6 +750,15 @@
       <div class="hero-photo">
         <img src="images/profile-caricature.jpg" alt="추영준 캐리커처 프로필" width="220" height="220">
       </div>
+    </div>
+  </section>
+
+  <!-- Showcase: lecture scene -->
+  <section class="showcase showcase-lecture">
+    <img src="images/showcase-lecture.jpg" alt="강연장에서 마이크를 들고 청중과 소통하는 강연 현장" loading="lazy" width="1600" height="2400">
+    <div class="showcase-caption container">
+      <span class="showcase-eyebrow">50+ 커리어 설계 강연</span>
+      <h2>정년퇴직, 이제 두 번째 도약을 준비할 시간입니다</h2>
     </div>
   </section>
 
@@ -656,6 +821,48 @@
     </div>
   </section>
 
+  <!-- Programs -->
+  <section class="programs" id="programs">
+    <div class="container reveal">
+      <h2 class="section-title">프로그램</h2>
+      <p class="section-desc">대상에 맞춰 두 갈래로 운영합니다. 50+에게는 커리어 재설계를, 65+에게는 인생을 기록하고 정리하는 시간을 제공합니다.</p>
+      <div class="program-grid">
+        <div class="program-card track-50">
+          <span class="program-eyebrow">50+ 대상</span>
+          <h3>커리어 설계 과정</h3>
+          <p class="program-desc">정년퇴직·희망퇴직·권고사직 등 커리어 전환점에 선 분들을 위한 실전 재설계 프로그램입니다. 지나온 경력을 다시 꺼내 정리하고, 방향과 현실 여건을 함께 점검한 뒤, 재취업·창업·리스킬링 중 나에게 맞는 다음 단계를 구체적인 실행 계획으로 만듭니다.</p>
+          <div class="program-stages">
+            <span class="stage-chip">1. 나를 꺼내다</span>
+            <span class="stage-chip">2. 나를 읽다</span>
+            <span class="stage-chip">3. 나를 짓다</span>
+          </div>
+          <ul class="program-outcomes">
+            <li>새롭게 정리한 나의 경력과 자기소개</li>
+            <li>나에게 맞는 진로 시나리오</li>
+            <li>바로 시작할 수 있는 첫 실행 미션</li>
+          </ul>
+          <p class="program-format">「고령자고용법」에 따른 재취업지원서비스 기반, 기업·기관 전직지원 교육 과정으로 진행 가능</p>
+        </div>
+        <div class="program-card track-65">
+          <span class="program-eyebrow">65+ 대상</span>
+          <h3>인생노트 프로그램</h3>
+          <p class="program-desc">은퇴 이후의 삶을 살아가는 어르신들을 위한 인생 기록·회고 프로그램입니다. 지나온 삶을 천천히 돌아보고, 가장 소중했던 순간과 나답게 살아온 이야기를 정리하며, 가족과 다음 세대에게 남기고 싶은 이야기를 글로 남깁니다.</p>
+          <div class="program-stages">
+            <span class="stage-chip">1. 돌아보다</span>
+            <span class="stage-chip">2. 정리하다</span>
+            <span class="stage-chip">3. 남기다</span>
+          </div>
+          <ul class="program-outcomes">
+            <li>나만의 인생노트(기록물)</li>
+            <li>가족과 나눌 수 있는 메시지</li>
+            <li>삶을 돌아보는 정리의 시간</li>
+          </ul>
+          <p class="program-format">저서 「인생노트」(출간예정)를 교재로 활용, 복지관·기관 대상 집단 프로그램으로 진행 가능</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
   <!-- Books -->
   <section class="books" id="books">
     <div class="container reveal">
@@ -663,16 +870,22 @@
       <p class="section-desc">글쓰기, 취업, 웰니스, 조직문화, 그리고 인생 전반을 다룬 책을 통해 독자와 만나고 있습니다.</p>
       <div class="book-grid">
         <div class="book-card">
-          <div class="book-cover"><img src="images/book-writing.jpg" alt="『글쓰기가 막막한 당신에게』 표지" loading="lazy" width="320" height="483"></div>
-          <p class="book-title">글쓰기가 막막한 당신에게</p>
+          <a class="book-link" href="https://product.kyobobook.co.kr/detail/S000201020736" target="_blank" rel="noopener">
+            <div class="book-cover"><img src="images/book-writing.jpg" alt="『글쓰기가 막막한 당신에게』 표지" loading="lazy" width="320" height="483"></div>
+            <p class="book-title">글쓰기가 막막한 당신에게</p>
+            <span class="book-buy">교보문고에서 구매 ↗</span>
+          </a>
         </div>
         <div class="book-card">
           <div class="book-cover"><img src="images/book-essay.jpg" alt="『합격 자소서 특강』 표지" loading="lazy" width="274" height="405"></div>
           <p class="book-title">합격 자소서 특강</p>
         </div>
         <div class="book-card">
-          <div class="book-cover"><img src="images/book-wellness.jpg" alt="『2026 웰니스 치유 트렌드』 표지" loading="lazy" width="326" height="493"></div>
-          <p class="book-title">2026 웰니스 치유 트렌드</p>
+          <a class="book-link" href="https://product.kyobobook.co.kr/detail/S000217467717" target="_blank" rel="noopener">
+            <div class="book-cover"><img src="images/book-wellness.jpg" alt="『2026 웰니스 치유 트렌드』 표지" loading="lazy" width="326" height="493"></div>
+            <p class="book-title">2026 웰니스 치유 트렌드</p>
+            <span class="book-buy">교보문고에서 구매 ↗</span>
+          </a>
         </div>
         <div class="book-card">
           <span class="badge-upcoming">출간예정</span>
@@ -687,7 +900,7 @@
   <section class="topics" id="topics">
     <div class="container reveal">
       <h2 class="section-title">강연 분야</h2>
-      <p class="section-desc">개인, 기업, 기관 대상으로 인생설계와 새로운 출발·두 번째 도약·리스킬링 강연을 진행합니다.</p>
+      <p class="section-desc">개인, 기업, 기관 대상으로 인생설계와 새로운 출발·두 번째 도약 강연을 진행합니다. 50+·65+ 대상 프로그램은 <a href="#programs">프로그램</a>에서 자세히 안내합니다.</p>
       <div class="topic-grid">
         <div class="topic-card">
           <h3>인생설계 강연</h3>
@@ -697,11 +910,16 @@
           <h3>새로운 출발·두 번째 도약 강연</h3>
           <p>인생 후반, 새로운 시작을 두려워하지 않도록 돕는 강연입니다. 변화하는 시대에 맞는 리스킬링 전략과 배움을 통해 두 번째 도약을 준비하는 방법을 안내합니다.</p>
         </div>
-        <div class="topic-card topic-card-wide">
-          <h3>퇴직예정자·퇴직자 커리어 전환·전직지원</h3>
-          <p>정년퇴직을 앞두었거나 이미 퇴직하신 분들을 위한 커리어 전환 및 재취업 지원 프로그램입니다. 「고령자고용법」에 따른 재취업지원서비스 제도를 기반으로, 기업·기관의 전직지원 교육 과정으로 진행할 수 있습니다.</p>
-        </div>
       </div>
+    </div>
+  </section>
+
+  <!-- Showcase: life note scene -->
+  <section class="showcase showcase-lifenote">
+    <img src="images/showcase-lifenote.jpg" alt="따뜻한 분위기에서 노트에 자신의 이야기를 적는 모습" loading="lazy" width="1600" height="1067">
+    <div class="showcase-caption container">
+      <span class="showcase-eyebrow">65+ 인생노트 프로그램</span>
+      <h2>지나온 삶을 기록하고, 다음 세대에게 이야기를 남깁니다</h2>
     </div>
   </section>
 
@@ -770,6 +988,7 @@
     <p class="footer-brand">인생설계가이드 · 추영준</p>
     <ul class="footer-links">
       <li><a href="#about">소개</a></li>
+      <li><a href="#programs">프로그램</a></li>
       <li><a href="#books">저서</a></li>
       <li><a href="#contact">문의</a></li>
     </ul>
