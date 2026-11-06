@@ -554,6 +554,7 @@
   .dx-consent th,.dx-consent td{text-align:left;padding:6px 4px;border-top:1px solid rgba(28,43,69,0.08);vertical-align:top;}
   .dx-consent th{color:var(--color-navy);white-space:nowrap;width:84px;}
   .dx-consent-foot{margin:8px 0 0;font-size:0.86rem;color:var(--color-text-muted);}
+  .dx-mail-note{margin:0;font-size:0.86rem;color:var(--color-text-muted);text-align:center;}
   #dxFormMsg{display:none;padding:12px 14px;border-radius:10px;font-size:0.95rem;font-weight:600;}
   #dxFormMsg.show{display:block;}
   #dxFormMsg.success{background:#e7f4ea;color:#276b3a;}
@@ -1066,7 +1067,7 @@
             <li><strong>무료</strong><span>회원가입 없음</span></li>
           </ul>
           <button type="button" class="btn btn-primary btn-block" id="dxStart">진단 시작하기</button>
-          <p class="dx-note">결과 요약은 바로 화면에서 확인하고, 상세 결과는 이메일로 받아 보실 수 있습니다.</p>
+          <p class="dx-note">결과 요약은 바로 화면에서, 상세 결과는 이메일 주소만 남기면 확인하실 수 있습니다.</p>
         </div>
       </div>
 
@@ -1112,14 +1113,14 @@
         </div>
 
         <div class="dx-detail">
-          <h3>상세 결과를 이메일로 받아 보세요</h3>
-          <p>요약에서는 보이지 않는 내용까지 정리해 보내 드립니다.</p>
+          <h3>상세 결과를 확인해 보세요</h3>
+          <p>이메일 주소를 남기시면 요약에서는 보이지 않는 내용까지 정리한 상세 결과 페이지를 바로 보여 드립니다.</p>
           <ul class="dx-detail-list">
             <li>나의 강점 3가지와 조심할 점</li>
             <li>내 경력이 말해 주는 것</li>
             <li>관심 분야에 맞춘 첫걸음 3단계</li>
             <li>퇴직 시기에 맞춘 조언과 추천 책·프로그램</li>
-            <li>언제든 다시 볼 수 있는 나만의 결과 링크</li>
+            <li>즐겨찾기해 두고 다시 볼 수 있는 나만의 결과 페이지</li>
           </ul>
           <form class="dx-form" id="dxForm" novalidate>
             <div id="dxFormMsg" role="status"></div>
@@ -1130,27 +1131,24 @@
             <div class="dx-consent">
               <label class="dx-check">
                 <input type="checkbox" id="dxConsent" value="1" required>
-                <span>[필수] 상세 결과 발송을 위한 개인정보 수집·이용에 동의합니다.</span>
+                <span>[필수] 상세 결과 제공을 위한 개인정보 수집·이용에 동의합니다.</span>
               </label>
               <details>
                 <summary>수집 내용 자세히 보기</summary>
                 <table>
                   <tr><th scope="row">수집 항목</th><td>이메일 주소, 진단 응답(연령대, 경력, 성향 응답)</td></tr>
-                  <tr><th scope="row">이용 목적</th><td>상세 결과 발송, 결과 다시 보기 링크 제공</td></tr>
-                  <tr><th scope="row">보관 기간</th><td>1년 후 파기. 삭제를 원하시면 결과 메일에 회신하거나 chu9527@nate.com으로 요청하시면 바로 삭제합니다.</td></tr>
+                  <tr><th scope="row">이용 목적</th><td>상세 결과 페이지 제공 (이메일 발송 시작 시 상세 결과 발송)</td></tr>
+                  <tr><th scope="row">보관 기간</th><td>1년 후 파기. 삭제를 원하시면 chu9527@nate.com으로 요청하시면 바로 삭제합니다.</td></tr>
                 </table>
                 <p class="dx-consent-foot">동의하지 않으셔도 위의 결과 요약은 그대로 보실 수 있습니다.</p>
               </details>
             </div>
-            <label class="dx-check">
-              <input type="checkbox" id="dxMarketing" value="1">
-              <span>[선택] 인생설계가이드의 강연·프로그램 소식을 이메일로 받겠습니다.</span>
-            </label>
             <div class="hp-field" aria-hidden="true">
               <label for="dxWebsite">웹사이트</label>
               <input type="text" id="dxWebsite" name="website" tabindex="-1" autocomplete="off">
             </div>
-            <button type="submit" class="btn btn-primary btn-block" id="dxSubmit">상세 결과 받기</button>
+            <button type="submit" class="btn btn-primary btn-block" id="dxSubmit">상세 결과 보기</button>
+            <p class="dx-mail-note">상세 결과 이메일 발송은 준비 중입니다. 지금은 상세 결과 페이지에서 바로 확인하실 수 있습니다.</p>
           </form>
         </div>
 
@@ -1825,7 +1823,7 @@
     $('dxFormMsg').className = '';
     $('dxFormMsg').textContent = '';
     $('dxSubmit').disabled = false;
-    $('dxSubmit').textContent = '상세 결과 받기';
+    $('dxSubmit').textContent = '상세 결과 보기';
     show('result');
     toTop();
     $('dxName').focus({preventScroll:true});
@@ -1882,7 +1880,6 @@
     var fd = new FormData();
     fd.append('email', email);
     fd.append('consent', '1');
-    fd.append('marketing', $('dxMarketing').checked ? '1' : '0');
     fd.append('website', $('dxWebsite').value);
     fd.append('age', state.age);
     fd.append('workplaces', state.workplaces.join(','));
@@ -1900,17 +1897,19 @@
       .then(function(res){
         if (res.ok){
           setMsg('success', res.message, res.resultUrl);
-          btn.textContent = '보냈습니다';
+          btn.textContent = '이동 중…';
+          // 메일 발송 준비 중이므로 상세 결과 페이지로 바로 이동
+          if (res.resultUrl) location.href = res.resultUrl;
         } else {
           setMsg('error', res.message);
           btn.disabled = false;
-          btn.textContent = '상세 결과 받기';
+          btn.textContent = '상세 결과 보기';
         }
       })
       .catch(function(){
         setMsg('error', '전송 중 문제가 생겼습니다. 잠시 후 다시 시도해 주세요.');
         btn.disabled = false;
-        btn.textContent = '상세 결과 받기';
+        btn.textContent = '상세 결과 보기';
       });
   });
 })();

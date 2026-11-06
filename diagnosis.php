@@ -11,7 +11,8 @@ declare(strict_types=1);
 
 const SITE_NAME          = '인생설계가이드';
 const ADMIN_EMAIL        = 'chu9527@nate.com';
-const MAX_SENDS_PER_DAY  = 3; // 같은 이메일로 하루에 받을 수 있는 횟수 (남의 메일함에 반복 발송 방지)
+// 같은 이메일로 하루에 요청할 수 있는 횟수 (메일 발송 시에는 남의 메일함 반복 발송 방지로 더 엄격하게)
+// DX_SEND_EMAIL(메일 발송 켜기/끄기)은 diagnosis_data.php에 있습니다.
 
 function respond(bool $ok, string $message, int $httpCode = 200, ?string $resultUrl = null): void
 {
@@ -27,7 +28,7 @@ if ($_SERVER['REQUEST_METHOD'] !== 'POST') {
 
 // 허니팟: 봇이면 성공한 것처럼 조용히 종료
 if (!empty($_POST['website'])) {
-    respond(true, '상세 결과를 이메일로 보내드렸습니다.');
+    respond(true, '접수되었습니다.');
 }
 
 $dbConfigPath = __DIR__ . '/db_config.php';
@@ -42,7 +43,6 @@ $str = fn(string $k): string => isset($_POST[$k]) ? trim((string) $_POST[$k]) : 
 
 $email      = $str('email');
 $consent    = $str('consent') === '1';
-$marketing  = $str('marketing') === '1';
 $age        = $str('age');
 $workplaces = array_values(array_unique(array_filter(explode(',', $str('workplaces')))));
 $main       = $str('main');
@@ -92,8 +92,8 @@ if (defined('DB_DSN') || defined('DB_HOST')) {
         $since = date('Y-m-d H:i:s', time() - 86400);
         $cnt = $pdo->prepare('SELECT COUNT(*) FROM diagnoses WHERE email = :email AND created_at >= :since');
         $cnt->execute([':email' => $email, ':since' => $since]);
-        if ((int) $cnt->fetchColumn() >= MAX_SENDS_PER_DAY) {
-            respond(false, '오늘은 이 이메일로 이미 여러 번 결과를 받으셨습니다. 내일 다시 시도해 주세요.', 429);
+        if ((int) $cnt->fetchColumn() >= (DX_SEND_EMAIL ? 3 : 10)) {
+            respond(false, '오늘은 이 이메일로 이미 여러 번 진단하셨습니다. 내일 다시 시도해 주세요.', 429);
         }
 
         $token = bin2hex(random_bytes(16));
@@ -116,7 +116,7 @@ if (defined('DB_DSN') || defined('DB_HOST')) {
             ':type'       => $detail['typeKey'],
             ':retire'     => $retire,
             ':interest'   => $interest,
-            ':marketing'  => $marketing ? 1 : 0,
+            ':marketing'  => 0, // 소식 수신(메일레터)은 사용하지 않음
             ':created_at' => date('Y-m-d H:i:s'),
         ]);
         $rowId = (int) $pdo->lastInsertId();
@@ -125,6 +125,14 @@ if (defined('DB_DSN') || defined('DB_HOST')) {
         error_log('[diagnosis.php] DB 저장 실패: ' . $e->getMessage());
         $pdo = null;
     }
+}
+
+// ---- 메일 발송 준비 중: 상세 결과 페이지로 바로 안내 ----------------------------
+if (!DX_SEND_EMAIL) {
+    if ($resultUrl !== null) {
+        respond(true, '상세 결과 페이지로 이동합니다.', 200, $resultUrl);
+    }
+    respond(false, '결과 저장 중 오류가 발생했습니다. 잠시 후 다시 시도해 주세요.', 500);
 }
 
 // ---- 상세 결과 메일 발송 ----------------------------------------------------

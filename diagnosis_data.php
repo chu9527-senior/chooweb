@@ -11,6 +11,10 @@ declare(strict_types=1);
 
 date_default_timezone_set('Asia/Seoul'); // 저장 시각·'오늘' 집계를 한국 시간으로
 
+// 상세 결과 메일 발송 여부. 지금은 준비 중이라 false → 메일 없이 상세 결과 페이지로 바로 안내합니다.
+// 메일 발송을 시작할 때 true로 바꾸면 됩니다. (db_config.php의 Brevo 설정 필요)
+const DX_SEND_EMAIL = false;
+
 if (!defined('SITE_URL')) {
     define('SITE_URL', 'https://lifetimes.kr');
 }

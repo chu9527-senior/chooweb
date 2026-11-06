@@ -1,7 +1,8 @@
 <?php
 /**
  * 「나의 인생 2막 캐릭터 진단」 — 결과 다시 보기 페이지 (마이페이지 대신)
- * 이메일로 받은 본인만 아는 링크(result.php?t=토큰)로 상세 결과를 보여줍니다.
+ * 진단 후 바로 이동하는 본인 전용 주소(result.php?t=토큰)로 상세 결과를 보여줍니다.
+ * (메일 발송을 켜면 같은 주소가 메일에도 들어갑니다)
  */
 
 declare(strict_types=1);
@@ -120,7 +121,7 @@ $e = fn(string $s): string => htmlspecialchars($s, ENT_QUOTES, 'UTF-8');
   <section class="detail">
     <?= dxDetailHtml($detail) ?>
   </section>
-  <p class="meta">진단일 <?= $e($createdAt) ?> · 이 페이지는 링크를 아는 분만 볼 수 있습니다.</p>
+  <p class="meta">진단일 <?= $e($createdAt) ?> · 이 페이지는 주소를 아는 분만 볼 수 있습니다. 즐겨찾기해 두시면 언제든 다시 보실 수 있습니다.</p>
   <div class="actions">
     <a href="index.html#contact" class="btn btn-primary">강연 문의하기</a>
     <a href="index.html#diagnosis" class="btn btn-outline">다시 진단하기</a>

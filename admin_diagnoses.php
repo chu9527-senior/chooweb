@@ -27,7 +27,7 @@ if (($_GET['action'] ?? '') === 'delete' && isset($_GET['id'])) {
     } catch (Throwable $e) {
         // 조용히 무시
     }
-    header('Location: admin.php?view=diagnoses' . (isset($_GET['f']) ? '&f=' . urlencode((string) $_GET['f']) : ''));
+    header('Location: admin.php?view=diagnoses');
     exit;
 }
 
@@ -35,8 +35,7 @@ $typeNames = array_map(fn($t) => $t['name'], dxTypes());
 $label = fn(array $map, $code): string => (string) ($map[$code] ?? $code);
 $wpLabel = fn($csv): string => implode(', ', array_map(fn($w) => DX_WORKPLACES[$w] ?? $w, explode(',', (string) $csv)));
 
-$filter = (string) ($_GET['f'] ?? 'all');
-$where = $filter === 'marketing' ? 'WHERE marketing_ok = 1' : '';
+$where = '';
 
 // ---- CSV 내려받기 (엑셀에서 한글이 깨지지 않도록 BOM 포함) ----------------------
 if (($_GET['export'] ?? '') === 'csv') {
@@ -50,14 +49,17 @@ if (($_GET['export'] ?? '') === 'csv') {
     header('Content-Disposition: attachment; filename="diagnoses_' . date('Ymd') . '.csv"');
     $out = fopen('php://output', 'w');
     fwrite($out, "\xEF\xBB\xBF");
-    fputcsv($out, ['일시', '이메일', '유형', '연령대', '일한 곳', '가장 오래 일한 곳', '경력', '퇴직 시점', '관심 분야', '소식 수신 동의', '메일 발송']);
+    $head = ['일시', '이메일', '유형', '연령대', '일한 곳', '가장 오래 일한 곳', '경력', '퇴직 시점', '관심 분야'];
+    if (DX_SEND_EMAIL) $head[] = '메일 발송';
+    fputcsv($out, $head);
     foreach ($rows as $r) {
-        fputcsv($out, [
+        $line = [
             $r['created_at'], $r['email'], $typeNames[$r['type_code']] ?? $r['type_code'],
             $label(DX_AGES, $r['age_group']), $wpLabel($r['workplaces']), $label(DX_WORKPLACES, $r['main_workplace']),
             $label(DX_YEARS, $r['career_years']), $label(DX_RETIRE, $r['retire_timing']), $label(DX_INTERESTS, $r['interest']),
-            (int) $r['marketing_ok'] ? '동의' : '', (int) $r['email_sent'] ? '완료' : '실패',
-        ]);
+        ];
+        if (DX_SEND_EMAIL) $line[] = (int) $r['email_sent'] ? '완료' : '실패';
+        fputcsv($out, $line);
     }
     fclose($out);
     exit;
@@ -76,8 +78,7 @@ try {
         'total'     => $count('SELECT COUNT(*) FROM diagnoses'),
         'today'     => $count('SELECT COUNT(*) FROM diagnoses WHERE created_at >= :d', [':d' => $today]),
         'week'      => $count('SELECT COUNT(*) FROM diagnoses WHERE created_at >= :d', [':d' => $week]),
-        'marketing' => $count('SELECT COUNT(*) FROM diagnoses WHERE marketing_ok = 1'),
-        'failed'    => $count('SELECT COUNT(*) FROM diagnoses WHERE email_sent = 0'),
+        'failed'    => DX_SEND_EMAIL ? $count('SELECT COUNT(*) FROM diagnoses WHERE email_sent = 0') : 0,
     ];
     $group = function (string $col) use ($pdo): array {
         $out = [];
@@ -181,8 +182,9 @@ function dxBars(array $labels, array $counts): string
         <div class="card"><p>전체 진단</p><b><?= $stats['total'] ?></b></div>
         <div class="card"><p>오늘</p><b><?= $stats['today'] ?></b></div>
         <div class="card"><p>최근 7일</p><b><?= $stats['week'] ?></b></div>
-        <div class="card"><p>소식 수신 동의</p><b><?= $stats['marketing'] ?></b></div>
+        <?php if (DX_SEND_EMAIL): ?>
         <div class="card<?= $stats['failed'] > 0 ? ' warn' : '' ?>"><p>메일 발송 실패</p><b><?= $stats['failed'] ?></b></div>
+        <?php endif; ?>
     </div>
 
     <?php if ($stats['total'] > 0): ?>
@@ -198,21 +200,19 @@ function dxBars(array $labels, array $counts): string
     <div class="toolbar">
         <h2>진단 참여자 목록</h2>
         <div class="right">
-            <a href="admin.php?view=diagnoses" class="<?= $filter === 'all' ? 'active' : '' ?>">전체</a>
-            <a href="admin.php?view=diagnoses&f=marketing" class="<?= $filter === 'marketing' ? 'active' : '' ?>">소식 수신 동의자만</a>
-            <a href="admin.php?view=diagnoses&export=csv<?= $filter === 'marketing' ? '&f=marketing' : '' ?>" class="csv">엑셀(CSV) 내려받기</a>
+            <a href="admin.php?view=diagnoses&export=csv" class="csv">엑셀(CSV) 내려받기</a>
         </div>
     </div>
 
     <?php if (count($rows) === 0): ?>
-        <div class="empty">아직 진단 참여자가 없습니다. 방문자가 진단 후 이메일로 상세 결과를 요청하면 여기에 쌓입니다.</div>
+        <div class="empty">아직 진단 참여자가 없습니다. 방문자가 진단 후 이메일을 남기고 상세 결과를 보면 여기에 쌓입니다.</div>
     <?php else: ?>
     <div class="table-wrap">
     <table>
         <thead>
             <tr>
                 <th>일시</th><th>이메일</th><th>유형</th><th>연령대</th><th>일한 곳 (가장 오래)</th>
-                <th>경력</th><th>퇴직 시점</th><th>관심 분야</th><th>소식 수신</th><th>메일</th><th>결과</th><th>작업</th>
+                <th>경력</th><th>퇴직 시점</th><th>관심 분야</th><?php if (DX_SEND_EMAIL): ?><th>메일</th><?php endif; ?><th>결과</th><th>작업</th>
             </tr>
         </thead>
         <tbody>
@@ -226,10 +226,11 @@ function dxBars(array $labels, array $counts): string
                 <td><?= $hx($label(DX_YEARS, $r['career_years'])) ?></td>
                 <td><?= $hx($label(DX_RETIRE, $r['retire_timing'])) ?></td>
                 <td><?= $hx($label(DX_INTERESTS, $r['interest'])) ?></td>
-                <td><?= (int) $r['marketing_ok'] ? '<span class="ok">동의</span>' : '-' ?></td>
+                <?php if (DX_SEND_EMAIL): ?>
                 <td><?= (int) $r['email_sent'] ? '<span class="ok">완료</span>' : '<span class="fail">실패</span>' ?></td>
+                <?php endif; ?>
                 <td><a class="result-link" href="result.php?t=<?= $hx($r['token']) ?>" target="_blank" rel="noopener">보기</a></td>
-                <td><a class="delete" href="admin.php?view=diagnoses&action=delete&id=<?= (int) $r['id'] ?><?= $filter === 'marketing' ? '&f=marketing' : '' ?>" onclick="return confirm('이 참여자의 정보를 삭제하시겠습니까? 결과 링크도 더 이상 열리지 않습니다.');">삭제</a></td>
+                <td><a class="delete" href="admin.php?view=diagnoses&action=delete&id=<?= (int) $r['id'] ?>" onclick="return confirm('이 참여자의 정보를 삭제하시겠습니까? 결과 링크도 더 이상 열리지 않습니다.');">삭제</a></td>
             </tr>
         <?php endforeach; ?>
         </tbody>
