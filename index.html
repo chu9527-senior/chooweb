@@ -3,9 +3,55 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>인생설계가이드 | 추영준 - 인생설계 · 새로운 출발·두 번째 도약 전문가</title>
-<meta name="description" content="추영준(인생설계가이드) - 인생설계 및 새로운 출발·두 번째 도약·리스킬링 강연, 저서 소개. 경희대학교 대학원 박사 수료, 중앙일보 사업부장 약 20년 경력.">
-<meta name="theme-color" content="#faf7f2">
+<title>퇴직·전직·이직 고민 해결, 무료 인생 2막 진단 | 인생설계가이드 추영준</title>
+<meta name="description" content="퇴직, 전직, 이직, 퇴사를 고민하는 중장년을 위한 무료 인생 2막 진단. 3분이면 내 경력과 성향에 맞는 재취업·구직·창업 방향과 첫걸음을 알려 드립니다. 인생설계가이드 추영준.">
+<meta name="keywords" content="전직, 퇴직, 이직, 퇴사, 이직자, 구직, 구인, 재취업, 전직지원, 재취업지원서비스, 희망퇴직, 정년퇴직, 권고사직, 중장년 일자리, 50대 재취업, 60대 재취업, 인생 2막, 커리어 진단, 경력 전환, 인생설계, 추영준, 인생설계가이드">
+<meta name="author" content="추영준">
+<meta name="robots" content="index, follow, max-image-preview:large">
+<link rel="canonical" href="https://lifetimes.kr/">
+<meta property="og:type" content="website">
+<meta property="og:locale" content="ko_KR">
+<meta property="og:site_name" content="인생설계가이드">
+<meta property="og:url" content="https://lifetimes.kr/">
+<meta property="og:title" content="퇴직·전직·이직, 머릿속이 복잡하신가요? | 인생설계가이드">
+<meta property="og:description" content="3분 무료 진단으로 내 경력과 성향에 맞는 인생 2막 방향을 찾아보세요. 재취업·구직·창업의 첫걸음을 알려 드립니다.">
+<meta property="og:image" content="https://lifetimes.kr/images/lecture-photo.jpg">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="theme-color" content="#1c2b45">
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": "WebSite",
+      "@id": "https://lifetimes.kr/#website",
+      "url": "https://lifetimes.kr/",
+      "name": "인생설계가이드",
+      "inLanguage": "ko-KR",
+      "description": "퇴직·전직·이직을 고민하는 중장년을 위한 무료 인생 2막 진단과 커리어 설계 강연"
+    },
+    {
+      "@type": "Person",
+      "@id": "https://lifetimes.kr/#person",
+      "name": "추영준",
+      "alternateName": "인생설계가이드",
+      "url": "https://lifetimes.kr/",
+      "image": "https://lifetimes.kr/images/profile-photo.jpg",
+      "jobTitle": "인생설계 강연가 · 저자",
+      "knowsAbout": ["전직", "퇴직", "이직", "재취업", "전직지원", "인생설계", "경력 전환", "글쓰기"]
+    },
+    {
+      "@type": "Service",
+      "name": "나의 인생 2막 캐릭터 진단",
+      "serviceType": "무료 커리어 진단",
+      "provider": {"@id": "https://lifetimes.kr/#person"},
+      "areaServed": "KR",
+      "audience": {"@type": "Audience", "audienceType": "퇴직 예정자, 전직·이직 희망자, 구직 중인 중장년"},
+      "offers": {"@type": "Offer", "price": "0", "priceCurrency": "KRW"}
+    }
+  ]
+}
+</script>
 <script>document.documentElement.classList.add('js');</script>
 <link rel="preconnect" href="https://cdn.jsdelivr.net">
 <link rel="stylesheet" as="style" crossorigin href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard.css">
@@ -321,6 +367,200 @@
     line-height:1.45;
     max-width:520px;
   }
+
+  /* ===== Pain intro: 고민 키워드가 어지럽게 떠다니다 실마리(진단 버튼)로 모이는 첫 화면 ===== */
+  .pain{
+    position:relative;
+    overflow:hidden;
+    min-height:560px;
+    min-height:calc(100vh - 68px);
+    min-height:calc(100svh - 68px);
+    display:flex;
+    align-items:center;
+    padding:72px 0;
+    color:var(--color-white);
+    background:radial-gradient(ellipse at 50% 45%, #2a3d61 0%, var(--color-navy) 68%);
+  }
+  .pain-field{position:absolute;inset:0;pointer-events:none;}
+  html:not(.js) .pain-field{display:none;}
+  .pain-kw{
+    position:absolute;
+    left:0;
+    top:0;
+    white-space:nowrap;
+    font-weight:700;
+    line-height:1.2;
+    color:var(--color-gold-light);
+    will-change:transform,opacity;
+    user-select:none;
+    opacity:0;
+  }
+  .pain-kw.q{color:var(--color-white);font-weight:600;}
+  .pain-kw.s1{font-size:0.95rem;}
+  .pain-kw.s2{font-size:1.25rem;}
+  .pain-kw.s3{font-size:1.65rem;}
+  .pain-copy{position:relative;z-index:1;text-align:center;max-width:760px;margin:0 auto;}
+  .pain-title{
+    font-size:2.1rem;
+    line-height:1.38;
+    font-weight:800;
+    margin:0 0 18px;
+    text-shadow:0 2px 22px rgba(28,43,69,0.95), 0 0 2px rgba(28,43,69,0.9);
+  }
+  .pain-title em{font-style:normal;color:var(--color-gold-light);}
+  .pain-sub{
+    font-size:1.08rem;
+    margin:0 auto 26px;
+    max-width:560px;
+    color:rgba(255,255,255,0.92);
+    text-shadow:0 2px 14px rgba(28,43,69,0.95);
+  }
+  .pain-thread{
+    display:block;
+    width:140px;
+    height:2px;
+    margin:0 auto 26px;
+    background:linear-gradient(90deg, transparent, var(--color-gold-light), transparent);
+  }
+  .pain-actions{display:flex;flex-direction:column;align-items:center;gap:14px;}
+  .btn-light{background:var(--color-white);color:var(--color-navy);}
+  .btn-light:hover{background:var(--color-bg-alt);}
+  .btn-light:focus-visible{outline:2px solid var(--color-gold-light);outline-offset:3px;}
+  .pain-more{font-size:0.92rem;color:rgba(255,255,255,0.8);text-decoration:underline;text-underline-offset:3px;}
+  .pain-more:hover{color:var(--color-gold-light);}
+  /* 단계 연출: JS가 정상 동작할 때만 숨겼다가 차례로 보여 줌 */
+  .js .pain .pain-title,
+  .js .pain .pain-sub,
+  .js .pain .pain-thread,
+  .js .pain .pain-actions{opacity:0;transform:translateY(10px);transition:opacity .7s ease, transform .7s ease;}
+  .js .pain .pain-thread{transform:scaleX(0);transition:opacity .6s ease, transform .9s ease;}
+  .js .pain.show-title .pain-title{opacity:1;transform:none;}
+  .js .pain.settled .pain-sub,
+  .js .pain.settled .pain-actions{opacity:1;transform:none;}
+  .js .pain.settled .pain-thread{opacity:1;transform:scaleX(1);}
+
+  /* ===== Diagnosis (메인 페이지 안에 들어간 진단) ===== */
+  .dx{background:var(--color-bg);scroll-margin-top:68px;}
+  .dx-inner{max-width:720px;margin:0 auto;}
+  .dx-head{text-align:center;}
+  .dx-head .section-desc{margin-left:auto;margin-right:auto;}
+  .dx-card{
+    background:var(--color-white);
+    border-radius:var(--radius);
+    box-shadow:var(--shadow);
+    padding:28px 22px;
+  }
+  .dx-worries-title{margin:0 0 12px;font-weight:800;color:var(--color-navy);font-size:1.1rem;}
+  .dx-worries{display:grid;gap:10px;margin:0 0 26px;}
+  .dx-worries li{
+    position:relative;
+    padding:12px 14px 12px 42px;
+    background:var(--color-bg);
+    border:1px solid rgba(28,43,69,0.06);
+    border-radius:10px;
+    font-size:0.98rem;
+  }
+  .dx-worries li::before{
+    content:"✓";
+    position:absolute;
+    left:14px;
+    top:12px;
+    color:var(--color-gold);
+    font-weight:800;
+  }
+  .dx-facts{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin:0 0 22px;text-align:center;}
+  .dx-facts li{border:1px solid rgba(28,43,69,0.08);border-radius:10px;padding:12px 6px;}
+  .dx-facts strong{display:block;color:var(--color-navy);font-size:1.1rem;font-weight:800;}
+  .dx-facts span{font-size:0.85rem;color:var(--color-text-muted);}
+  .dx-note{font-size:0.88rem;color:var(--color-text-muted);margin:12px 0 0;text-align:center;}
+  .btn-block{width:100%;}
+  .btn:disabled{background:#8a93a3;cursor:not-allowed;transform:none;box-shadow:none;}
+  .dx [hidden]{display:none !important;}
+
+  .dx-progress-row{display:flex;align-items:center;justify-content:space-between;margin:0 0 10px;font-size:0.92rem;}
+  .dx-link-btn{
+    background:none;border:none;font-family:inherit;font-size:0.95rem;font-weight:600;
+    color:var(--color-navy);cursor:pointer;padding:6px 2px;
+  }
+  .dx-link-btn:hover{color:var(--color-gold);}
+  .dx-link-btn:disabled{visibility:hidden;}
+  .dx-link-btn:focus-visible,.dx-option:focus-visible,.dx-consent summary:focus-visible,.dx-result-link:focus-visible{
+    outline:2px solid var(--color-gold);outline-offset:3px;border-radius:6px;
+  }
+  .dx-count{color:var(--color-text-muted);font-weight:600;}
+  .dx-bar{height:8px;background:var(--color-bg-alt);border-radius:999px;overflow:hidden;margin:0 0 28px;}
+  .dx-bar-fill{height:100%;width:0;background:var(--color-gold);border-radius:999px;transition:width .25s ease;}
+  .dx-part{
+    display:inline-block;font-size:0.82rem;font-weight:700;color:var(--color-white);
+    background:var(--color-navy);padding:4px 12px;border-radius:999px;margin:0 0 14px;
+  }
+  .dx-q{font-size:1.4rem;line-height:1.45;color:var(--color-navy);margin:0 0 8px;font-weight:800;outline:none;}
+  .dx-hint{color:var(--color-text-muted);margin:0 0 20px;font-size:0.95rem;}
+  .dx-options{display:grid;gap:10px;margin:0 0 18px;}
+  .dx-option{
+    display:flex;align-items:center;gap:14px;width:100%;text-align:left;
+    background:var(--color-white);border:2px solid rgba(28,43,69,0.12);border-radius:var(--radius);
+    padding:16px 16px;font-family:inherit;font-size:1.03rem;font-weight:600;color:var(--color-text);line-height:1.45;
+    cursor:pointer;transition:border-color .15s ease, background .15s ease;touch-action:manipulation;
+  }
+  .dx-option:hover{border-color:var(--color-gold);}
+  .dx-option:active{transform:scale(0.99);}
+  .dx-mark{
+    flex-shrink:0;width:30px;height:30px;border-radius:50%;
+    background:var(--color-bg-alt);color:var(--color-navy);
+    display:flex;align-items:center;justify-content:center;font-size:0.95rem;font-weight:800;
+  }
+  .dx-option.multi .dx-mark{border-radius:8px;}
+  .dx-option[aria-pressed="true"],.dx-option[aria-checked="true"]{border-color:var(--color-navy);background:#f6f2ea;}
+  .dx-option[aria-pressed="true"] .dx-mark,.dx-option[aria-checked="true"] .dx-mark{background:var(--color-navy);color:var(--color-white);}
+
+  .dx-eyebrow{font-size:0.9rem;font-weight:700;color:var(--color-gold);margin:0 0 10px;text-align:center;}
+  .dx-type{
+    background:var(--color-navy);color:var(--color-white);border-radius:var(--radius);
+    padding:30px 24px;box-shadow:var(--shadow);text-align:center;
+  }
+  .dx-type-career{margin:0 0 4px;color:var(--color-gold-light);font-weight:600;}
+  .dx-type-name{margin:0 0 10px;font-size:2rem;line-height:1.3;font-weight:800;outline:none;}
+  .dx-type-tagline{margin:0 0 16px;color:var(--color-gold-light);font-weight:600;}
+  .dx-type-summary{margin:0;opacity:.92;text-align:left;}
+  .dx-keywords{display:flex;flex-wrap:wrap;justify-content:center;gap:8px;margin:18px 0 0;}
+  .dx-keywords li{border:1px solid rgba(216,185,120,0.5);color:var(--color-gold-light);padding:4px 14px;border-radius:999px;font-size:0.88rem;font-weight:700;}
+  .dx-axes{background:var(--color-white);border-radius:var(--radius);box-shadow:var(--shadow);padding:22px 22px 6px;margin:16px 0 0;}
+  .dx-axes h3{font-size:1rem;color:var(--color-navy);margin:0 0 14px;}
+  .dx-axis{margin:0 0 18px;}
+  .dx-axis-labels{display:flex;justify-content:space-between;font-size:0.9rem;font-weight:700;color:var(--color-navy);margin:0 0 6px;}
+  .dx-axis-track{position:relative;height:10px;background:var(--color-bg-alt);border-radius:999px;}
+  .dx-axis-dot{
+    position:absolute;top:50%;width:22px;height:22px;margin:-11px 0 0 -11px;border-radius:50%;left:50%;
+    background:var(--color-gold);border:3px solid var(--color-white);box-shadow:0 2px 6px rgba(28,43,69,0.25);
+  }
+  .dx-axis-desc{font-size:0.88rem;color:var(--color-text-muted);margin:6px 0 0;}
+  .dx-detail{
+    background:var(--color-white);border-radius:var(--radius);box-shadow:var(--shadow);
+    padding:26px 22px;margin:16px 0 0;border-top:4px solid var(--color-gold);
+  }
+  .dx-detail h3{font-size:1.22rem;color:var(--color-navy);margin:0 0 6px;}
+  .dx-detail > p{color:var(--color-text-muted);margin:0 0 16px;}
+  .dx-detail-list{display:grid;gap:8px;margin:0 0 22px;}
+  .dx-detail-list li{padding-left:24px;position:relative;font-size:0.98rem;}
+  .dx-detail-list li::before{content:"✓";position:absolute;left:0;color:var(--color-gold);font-weight:700;}
+  .dx-form{display:flex;flex-direction:column;gap:14px;}
+  .dx-check{display:flex;gap:10px;align-items:flex-start;font-size:0.95rem;cursor:pointer;}
+  .dx-check input{width:20px;height:20px;margin:3px 0 0;accent-color:var(--color-navy);flex-shrink:0;}
+  .dx-check input:focus-visible{outline:2px solid var(--color-gold);outline-offset:2px;}
+  .dx-consent{background:var(--color-bg);border-radius:10px;padding:14px 16px;}
+  .dx-consent summary{cursor:pointer;font-size:0.88rem;color:var(--color-navy);font-weight:600;margin-top:8px;}
+  .dx-consent table{width:100%;border-collapse:collapse;font-size:0.86rem;margin-top:8px;}
+  .dx-consent th,.dx-consent td{text-align:left;padding:6px 4px;border-top:1px solid rgba(28,43,69,0.08);vertical-align:top;}
+  .dx-consent th{color:var(--color-navy);white-space:nowrap;width:84px;}
+  .dx-consent-foot{margin:8px 0 0;font-size:0.86rem;color:var(--color-text-muted);}
+  #dxFormMsg{display:none;padding:12px 14px;border-radius:10px;font-size:0.95rem;font-weight:600;}
+  #dxFormMsg.show{display:block;}
+  #dxFormMsg.success{background:#e7f4ea;color:#276b3a;}
+  #dxFormMsg.error{background:#fbeaea;color:#a33a3a;}
+  .dx-result-link{display:inline-block;margin-top:6px;color:var(--color-navy);font-weight:700;text-decoration:underline;}
+  .dx-after{display:grid;gap:12px;margin:22px 0 0;}
+  .dx-after p{text-align:center;margin:0;}
 
   /* Profile / About */
   .about{background:var(--color-white);}
@@ -706,6 +946,17 @@
     .showcase{height:420px;}
     .showcase-caption h2{font-size:1.7rem;}
     .contact-wrap{grid-template-columns:0.9fr 1.1fr;align-items:start;}
+    .pain-title{font-size:2.9rem;}
+    .pain-sub{font-size:1.18rem;}
+    .pain-kw.s1{font-size:1.05rem;}
+    .pain-kw.s2{font-size:1.45rem;}
+    .pain-kw.s3{font-size:2rem;}
+    .dx-card{padding:36px 40px;}
+    .dx-q{font-size:1.6rem;}
+    .dx-type-name{font-size:2.3rem;}
+    .dx-type,.dx-detail{padding-left:40px;padding-right:40px;}
+    .dx-after{grid-template-columns:1fr 1fr;}
+    .dx-after p{grid-column:1 / -1;}
     .nav-menu{display:flex;}
     .nav-cta{display:inline-flex;}
     .hamburger{display:none;}
@@ -730,6 +981,7 @@
   <div class="container nav-wrap">
     <a href="#top" class="brand">인생설계<span>가이드</span></a>
     <nav class="nav-menu" aria-label="주요 메뉴">
+      <a href="#diagnosis">무료 진단</a>
       <a href="#about">소개</a>
       <a href="#programs">프로그램</a>
       <a href="#books">저서</a>
@@ -742,6 +994,7 @@
     </button>
   </div>
   <div class="container mobile-menu" id="mobileMenu">
+    <a href="#diagnosis">무료 진단</a>
     <a href="#about">소개</a>
     <a href="#programs">프로그램</a>
     <a href="#books">저서</a>
@@ -753,12 +1006,170 @@
 
 <main id="top">
 
+  <!-- Pain intro: 방문자의 고민이 먼저 -->
+  <section class="pain" id="painIntro" aria-labelledby="painTitle">
+    <div class="pain-field" id="painField" aria-hidden="true">
+      <span class="pain-kw s3">퇴직</span>
+      <span class="pain-kw s3">전직</span>
+      <span class="pain-kw s3">이직</span>
+      <span class="pain-kw s2">퇴사</span>
+      <span class="pain-kw s2">구직</span>
+      <span class="pain-kw s2">재취업</span>
+      <span class="pain-kw s2">희망퇴직</span>
+      <span class="pain-kw s1">권고사직</span>
+      <span class="pain-kw s1">정년퇴직</span>
+      <span class="pain-kw s1">이직자</span>
+      <span class="pain-kw s1">구인 공고</span>
+      <span class="pain-kw s1">나이 제한</span>
+      <span class="pain-kw s1">이력서</span>
+      <span class="pain-kw s1">면접</span>
+      <span class="pain-kw s2">노후 자금</span>
+      <span class="pain-kw s1">창업</span>
+      <span class="pain-kw s1">경력 전환</span>
+      <span class="pain-kw q s1">다음엔 뭘 하지?</span>
+      <span class="pain-kw q s1">내 경력, 아직 쓸모 있을까?</span>
+      <span class="pain-kw q s1">50대 재취업, 가능할까?</span>
+      <span class="pain-kw q s1">퇴직금은 어떻게 하지?</span>
+      <span class="pain-kw q s1">가족에게 뭐라고 말하지?</span>
+    </div>
+    <div class="container pain-copy">
+      <h1 class="pain-title" id="painTitle">퇴직, 전직, 이직…<br><em>머릿속이 복잡하신가요?</em></h1>
+      <p class="pain-sub">엉킨 고민도 실마리 하나면 풀리기 시작합니다. 지금 내 경력과 성향부터 3분 만에 점검해 보세요.</p>
+      <span class="pain-thread" aria-hidden="true"></span>
+      <div class="pain-actions">
+        <a href="#diagnosis" class="btn btn-light" id="painCta">3분 무료 진단 시작</a>
+        <a href="#about" class="pain-more">인생설계가이드 추영준 알아보기</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- Diagnosis: 당신의 지금을 진단해 보세요 -->
+  <section class="dx" id="diagnosis" aria-labelledby="dxTitle">
+    <div class="container dx-inner">
+
+      <div id="dxIntro">
+        <div class="dx-head">
+          <h2 class="section-title" id="dxTitle">당신의 지금을 진단해 보세요</h2>
+          <p class="section-desc">지나온 경력과 타고난 성향으로, 인생 2막에 나에게 가장 잘 맞는 캐릭터와 첫걸음을 알려 드립니다.</p>
+        </div>
+        <div class="dx-card">
+          <p class="dx-worries-title">이런 고민, 하고 계신가요?</p>
+          <ul class="dx-worries">
+            <li>회사에서 희망퇴직·권고사직 이야기가 나오기 시작했다</li>
+            <li>정년퇴직이 다가오는데 다음 일이 막막하다</li>
+            <li>이직·전직을 하고 싶지만 내 경력이 통할지 모르겠다</li>
+            <li>퇴사 후 구직 중인데 어디서부터 시작할지 모르겠다</li>
+          </ul>
+          <ul class="dx-facts">
+            <li><strong>11문항</strong><span>4·5지선다</span></li>
+            <li><strong>3분</strong><span>소요 시간</span></li>
+            <li><strong>무료</strong><span>회원가입 없음</span></li>
+          </ul>
+          <button type="button" class="btn btn-primary btn-block" id="dxStart">진단 시작하기</button>
+          <p class="dx-note">결과 요약은 바로 화면에서 확인하고, 상세 결과는 이메일로 받아 보실 수 있습니다.</p>
+        </div>
+      </div>
+
+      <div id="dxQuiz" hidden>
+        <div class="dx-card">
+          <div class="dx-progress-row">
+            <button type="button" class="dx-link-btn" id="dxBack">← 이전</button>
+            <span class="dx-count" id="dxCount"></span>
+          </div>
+          <div class="dx-bar" role="progressbar" aria-label="진행률" aria-valuemin="0" aria-valuemax="100" id="dxBar">
+            <div class="dx-bar-fill" id="dxBarFill"></div>
+          </div>
+          <span class="dx-part" id="dxPart"></span>
+          <h3 class="dx-q" id="dxQ" tabindex="-1"></h3>
+          <p class="dx-hint" id="dxHint"></p>
+          <div class="dx-options" id="dxOptions"></div>
+          <button type="button" class="btn btn-primary btn-block" id="dxNext" hidden disabled>다음</button>
+        </div>
+      </div>
+
+      <div id="dxResult" hidden>
+        <p class="dx-eyebrow">진단 결과 요약</p>
+        <div class="dx-type">
+          <p class="dx-type-career" id="dxCareer"></p>
+          <h3 class="dx-type-name" id="dxName" tabindex="-1"></h3>
+          <p class="dx-type-tagline" id="dxTagline"></p>
+          <p class="dx-type-summary" id="dxSummary"></p>
+          <ul class="dx-keywords" id="dxKeywords" aria-label="키워드"></ul>
+        </div>
+
+        <div class="dx-axes">
+          <h3>나의 성향 위치</h3>
+          <div class="dx-axis">
+            <div class="dx-axis-labels"><span>외향</span><span>내향</span></div>
+            <div class="dx-axis-track"><span class="dx-axis-dot" id="dxDotEI"></span></div>
+            <p class="dx-axis-desc" id="dxDescEI"></p>
+          </div>
+          <div class="dx-axis">
+            <div class="dx-axis-labels"><span>도전</span><span>안정</span></div>
+            <div class="dx-axis-track"><span class="dx-axis-dot" id="dxDotCS"></span></div>
+            <p class="dx-axis-desc" id="dxDescCS"></p>
+          </div>
+        </div>
+
+        <div class="dx-detail">
+          <h3>상세 결과를 이메일로 받아 보세요</h3>
+          <p>요약에서는 보이지 않는 내용까지 정리해 보내 드립니다.</p>
+          <ul class="dx-detail-list">
+            <li>나의 강점 3가지와 조심할 점</li>
+            <li>내 경력이 말해 주는 것</li>
+            <li>관심 분야에 맞춘 첫걸음 3단계</li>
+            <li>퇴직 시기에 맞춘 조언과 추천 책·프로그램</li>
+            <li>언제든 다시 볼 수 있는 나만의 결과 링크</li>
+          </ul>
+          <form class="dx-form" id="dxForm" novalidate>
+            <div id="dxFormMsg" role="status"></div>
+            <div class="form-row">
+              <label for="dxEmail">이메일 주소</label>
+              <input type="email" id="dxEmail" name="email" required autocomplete="email" spellcheck="false" inputmode="email">
+            </div>
+            <div class="dx-consent">
+              <label class="dx-check">
+                <input type="checkbox" id="dxConsent" value="1" required>
+                <span>[필수] 상세 결과 발송을 위한 개인정보 수집·이용에 동의합니다.</span>
+              </label>
+              <details>
+                <summary>수집 내용 자세히 보기</summary>
+                <table>
+                  <tr><th scope="row">수집 항목</th><td>이메일 주소, 진단 응답(연령대, 경력, 성향 응답)</td></tr>
+                  <tr><th scope="row">이용 목적</th><td>상세 결과 발송, 결과 다시 보기 링크 제공</td></tr>
+                  <tr><th scope="row">보관 기간</th><td>1년 후 파기. 삭제를 원하시면 결과 메일에 회신하거나 chu9527@nate.com으로 요청하시면 바로 삭제합니다.</td></tr>
+                </table>
+                <p class="dx-consent-foot">동의하지 않으셔도 위의 결과 요약은 그대로 보실 수 있습니다.</p>
+              </details>
+            </div>
+            <label class="dx-check">
+              <input type="checkbox" id="dxMarketing" value="1">
+              <span>[선택] 인생설계가이드의 강연·프로그램 소식을 이메일로 받겠습니다.</span>
+            </label>
+            <div class="hp-field" aria-hidden="true">
+              <label for="dxWebsite">웹사이트</label>
+              <input type="text" id="dxWebsite" name="website" tabindex="-1" autocomplete="off">
+            </div>
+            <button type="submit" class="btn btn-primary btn-block" id="dxSubmit">상세 결과 받기</button>
+          </form>
+        </div>
+
+        <div class="dx-after">
+          <button type="button" class="btn btn-outline" id="dxShare">지인에게 진단 권하기</button>
+          <a href="#contact" class="btn btn-primary">강연 문의하기</a>
+          <p><button type="button" class="dx-link-btn" id="dxRestart">처음부터 다시 하기</button></p>
+        </div>
+      </div>
+
+    </div>
+  </section>
+
   <!-- Hero -->
   <section class="hero">
     <div class="container hero-grid">
       <div class="hero-copy">
         <span class="section-label">인생설계가이드 · 추영준</span>
-        <h1 class="hero-title">당신의 멋진 인생,<br><em>어떻게 설계</em>하시겠습니까?</h1>
+        <h2 class="hero-title">당신의 멋진 인생,<br><em>어떻게 설계</em>하시겠습니까?</h2>
         <p class="hero-sub">인생설계와 새로운 출발·두 번째 도약을 함께 고민하는 강연가이자 저자, 추영준입니다.</p>
         <div class="hero-actions">
           <a href="#contact" class="btn btn-primary">강연 문의하기</a>
@@ -1024,6 +1435,7 @@
       <li><a href="#programs">프로그램</a></li>
       <li><a href="#books">저서</a></li>
       <li><a href="#contact">문의</a></li>
+      <li><a href="#diagnosis">무료 진단</a></li>
     </ul>
     <p>&copy; <span id="year"></span> 인생설계가이드(추영준). All rights reserved.</p>
   </div>
@@ -1122,6 +1534,386 @@
       formMsg.scrollIntoView({ behavior:'smooth', block:'nearest' });
     });
   });
+</script>
+
+<script>
+/* ===== Pain intro 연출 =====
+   1) 고민 키워드가 화면을 어지럽게 떠다님 (약 2.6초)
+   2) 키워드들이 '진단 시작' 버튼(실마리)으로 빨려 들어가듯 모임
+   3) 문구·버튼이 나타나고, 키워드는 흐릿한 배경으로 남음 (반복 없음)
+   움직임 줄이기 설정 사용자는 바로 3)의 상태로 보여 줌 */
+(function(){
+  var sec = document.getElementById('painIntro');
+  var field = document.getElementById('painField');
+  var cta = document.getElementById('painCta');
+  if (!sec || !field || !cta) return;
+
+  var kws = Array.prototype.slice.call(field.querySelectorAll('.pain-kw'));
+  var reduce = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  var W = field.clientWidth, H = field.clientHeight;
+  var done = false;
+
+  var items = kws.map(function(el, i){
+    var w = el.offsetWidth, h = el.offsetHeight;
+    var speed = 70 + Math.random() * 110;
+    var ang = Math.random() * Math.PI * 2;
+    return {
+      el:el, w:w, h:h,
+      x:Math.random() * Math.max(1, W - w),
+      y:Math.random() * Math.max(1, H - h),
+      vx:Math.cos(ang) * speed, vy:Math.sin(ang) * speed,
+      r:(Math.random() * 2 - 1) * 10,
+      op:el.classList.contains('s3') ? 0.95 : (el.classList.contains('q') ? 0.85 : 0.6 + Math.random() * 0.3)
+    };
+  });
+
+  function place(it, scale){
+    it.el.style.transform = 'translate(' + it.x.toFixed(1) + 'px,' + it.y.toFixed(1) + 'px) rotate(' + it.r.toFixed(1) + 'deg)' + (scale ? ' scale(' + scale + ')' : '');
+  }
+
+  // 최종 배경 배치: 가운데 문구 영역은 피해서 가장자리에 흩어 둠
+  function scatter(){
+    W = field.clientWidth; H = field.clientHeight;
+    var placed = [], GAP = 14;
+    function hits(x, y, it){
+      // 가운데 문구 영역
+      if (Math.abs(x + it.w / 2 - W / 2) < W * 0.34 + it.w / 2 && Math.abs(y + it.h / 2 - H / 2) < H * 0.24 + it.h / 2) return true;
+      for (var k = 0; k < placed.length; k++){
+        var p = placed[k];
+        if (x < p.x + p.w + GAP && x + it.w + GAP > p.x && y < p.y + p.h + GAP && y + it.h + GAP > p.y) return true;
+      }
+      return false;
+    }
+    items.forEach(function(it){
+      var x, y, tries = 0;
+      do {
+        x = Math.random() * Math.max(1, W - it.w);
+        y = Math.random() * Math.max(1, H - it.h);
+        tries++;
+      } while (hits(x, y, it) && tries < 60);
+      if (tries >= 60){ it.el.style.visibility = 'hidden'; }  // 좁은 화면에서 자리가 없으면 생략
+      else { it.el.style.visibility = ''; placed.push({x:x, y:y, w:it.w, h:it.h}); }
+      it.x = x; it.y = y; it.r = 0;
+    });
+  }
+
+  function finish(){
+    if (done) return;
+    done = true;
+    sec.classList.add('show-title', 'settled');
+    scatter();
+    items.forEach(function(it){ it.el.style.transition = 'none'; place(it); });
+    void field.offsetWidth;
+    items.forEach(function(it){ it.el.style.transition = 'opacity 1.2s ease'; it.el.style.opacity = '0.13'; });
+  }
+
+  if (reduce){ finish(); return; }
+
+  items.forEach(function(it){ place(it); it.el.style.opacity = it.op; });
+  setTimeout(function(){ sec.classList.add('show-title'); }, 900);
+
+  var start = performance.now(), last = start, CHAOS = 2600;
+  function tick(now){
+    if (done) return;
+    var dt = Math.min(0.05, (now - last) / 1000);
+    last = now;
+    var t = (now - start) / 1000;
+    items.forEach(function(it, i){
+      // 직선 이동 + 흔들림 = 어지러운 느낌
+      it.x += it.vx * dt + Math.sin(t * 2.4 + i) * 0.8;
+      it.y += it.vy * dt + Math.cos(t * 2.0 + i * 1.3) * 0.8;
+      if (it.x < 0){ it.x = 0; it.vx = Math.abs(it.vx); }
+      if (it.x > W - it.w){ it.x = W - it.w; it.vx = -Math.abs(it.vx); }
+      if (it.y < 0){ it.y = 0; it.vy = Math.abs(it.vy); }
+      if (it.y > H - it.h){ it.y = H - it.h; it.vy = -Math.abs(it.vy); }
+      it.r += Math.sin(t * 3 + i) * 0.35;
+      place(it);
+    });
+    if (now - start < CHAOS) requestAnimationFrame(tick); else gather();
+  }
+  requestAnimationFrame(tick);
+
+  // 실마리: 흩어진 고민이 진단 버튼 한 점으로 모임
+  function gather(){
+    var fr = field.getBoundingClientRect(), cr = cta.getBoundingClientRect();
+    var gx = cr.left - fr.left + cr.width / 2, gy = cr.top - fr.top + cr.height / 2;
+    items.forEach(function(it, i){
+      var delay = i * 22;
+      it.el.style.transition = 'transform .85s cubic-bezier(.55,0,.75,.2) ' + delay + 'ms, opacity .85s ease ' + delay + 'ms';
+      it.x = gx - it.w / 2; it.y = gy - it.h / 2; it.r = 0;
+      place(it, 0.2);
+      it.el.style.opacity = '0';
+    });
+    setTimeout(finish, 850 + items.length * 22 + 60);
+  }
+
+  // 안전장치: 탭이 백그라운드여서 애니메이션이 멈춰도 내용은 반드시 보이게
+  setTimeout(finish, 6500);
+  window.addEventListener('resize', function(){
+    if (!done) { W = field.clientWidth; H = field.clientHeight; return; }
+    scatter();
+    items.forEach(function(it){ it.el.style.transition = 'none'; place(it); });
+  });
+})();
+
+/* ===== 나의 인생 2막 캐릭터 진단 =====
+   코드 값·유형 이름은 diagnosis_data.php와 같아야 합니다. */
+(function(){
+  var $ = function(id){ return document.getElementById(id); };
+  if (!$('diagnosis')) return;
+
+  var WORKPLACES = {corp:'기업', 'public':'공공기관', school:'학교·교육기관', assoc:'협단체·비영리', free:'프리랜서·자영업'};
+  var YEARS = {lt10:'10년 미만', '10to20':'10~20년', '20to30':'20~30년', gt30:'30년 이상'};
+  var MARKS = ['1','2','3','4','5'];
+
+  // 성향 문항: ①이 외향(도전) 쪽 끝, ④가 내향(안정) 쪽 끝
+  var QUESTIONS = [
+    {id:'age', part:'시작', title:'먼저, 나이대를 알려 주세요.',
+      options:[['40s','40대'],['50s','50대'],['60s','60대'],['70s','70대 이상']]},
+    {id:'workplaces', part:'경력', multi:true, title:'지금까지 어떤 곳에서 일해 보셨나요?',
+      hint:'해당하는 곳을 모두 골라 주세요.',
+      options:[['corp','기업'],['public','공공기관'],['school','학교·교육기관'],['assoc','협단체·비영리'],['free','프리랜서·자영업']]},
+    {id:'main', part:'경력', title:'그중 가장 오래 일한 곳은 어디인가요?',
+      when:function(s){ return s.workplaces.length > 1; },
+      options:function(s){ return s.workplaces.map(function(k){ return [k, WORKPLACES[k]]; }); }},
+    {id:'years', part:'경력', title:'일한 기간을 모두 합치면 얼마나 되나요?',
+      options:[['lt10','10년 미만'],['10to20','10~20년'],['20to30','20~30년'],['gt30','30년 이상']]},
+    {id:'p1', part:'성향', title:'오랜만에 생긴 자유로운 주말, 나는?',
+      options:[['1','여러 모임에 나가 사람들을 만난다'],['2','친한 친구 한두 명과 만난다'],['3','가족과 집에서 오붓하게 쉰다'],['4','혼자만의 시간을 갖고 충전한다']]},
+    {id:'p2', part:'성향', title:'처음 보는 사람이 많은 자리에 갔다면?',
+      options:[['1','먼저 다가가 분위기를 띄운다'],['2','옆 사람과 자연스럽게 인사를 나눈다'],['3','누가 말을 걸어 오면 반갑게 응한다'],['4','조용히 분위기를 지켜본다']]},
+    {id:'p3', part:'성향', title:'고민이 생기면 나는?',
+      options:[['1','여러 사람에게 의견을 들어 본다'],['2','믿을 만한 한 사람과 상의한다'],['3','혼자 생각한 뒤 필요하면 묻는다'],['4','끝까지 혼자 곰곰이 정리한다']]},
+    {id:'p4', part:'성향', title:'처음 해 보는 일을 맡았다면?',
+      options:[['1','일단 부딪쳐 보면서 길을 찾는다'],['2','큰 방향만 정하고 바로 시작한다'],['3','비슷한 사례를 찾아본 뒤 시작한다'],['4','계획을 꼼꼼히 세운 뒤 시작한다']]},
+    {id:'p5', part:'성향', title:'여행을 떠난다면?',
+      options:[['1','목적지만 정하고 즉흥으로 다닌다'],['2','숙소만 정하고 나머지는 그때그때'],['3','주요 일정은 미리 짜 둔다'],['4','맛집까지 시간표대로 다닌다']]},
+    {id:'p6', part:'성향', title:'월급이 같다면 어떤 일을 고를까요?',
+      options:[['1','전혀 새로운 분야의 일'],['2','하던 일에 새로움을 더한 일'],['3','익숙하지만 조금 다른 일'],['4','하던 그대로 안정적인 일']]},
+    {id:'retire', part:'2막 준비', title:'퇴직(퇴사)은 언제쯤인가요?',
+      options:[['done','이미 퇴직(퇴사)했다'],['within1','1년 안에'],['within5','1~5년 안에'],['later','아직 정해진 바 없다']]},
+    {id:'interest', part:'2막 준비', title:'인생 2막에 가장 끌리는 일은 무엇인가요?',
+      options:[['job','재취업·전직'],['startup','창업·1인 사업'],['share','강연·책 쓰기·지식 나눔'],['leisure','배움·봉사·여가']]}
+  ];
+
+  var TYPES = {
+    pioneer:{name:'무대 위의 개척자', tagline:'사람을 만나며 길을 내는 사람', keywords:['추진력','네트워크','표현력'],
+      summary:'사람들 앞에 서고 새 일을 벌일 때 힘이 나는 유형입니다. 인생 2막에서도 가만히 있기보다 무언가를 시작하고, 그 과정을 사람들과 나눌 때 가장 빛납니다.'},
+    connector:{name:'든든한 연결자', tagline:'사람과 사람을 잇는 사람', keywords:['신뢰','조율','배려'],
+      summary:'사람들 사이에서 다리 역할을 할 때 보람을 느끼는 유형입니다. 큰 모험보다 믿을 수 있는 관계 속에서 꾸준히 기여하는 2막이 잘 맞습니다.'},
+    strategist:{name:'조용한 전략가', tagline:'깊이 생각하고 새 판을 짜는 사람', keywords:['분석력','독립성','기획력'],
+      summary:'혼자 깊이 생각하는 시간에서 좋은 아이디어가 나오는 유형입니다. 지금까지의 경험을 정리해 나만의 콘텐츠나 사업으로 만드는 2막에 강합니다.'},
+    craftsman:{name:'깊이 있는 장인', tagline:'한 우물을 깊게 파는 사람', keywords:['전문성','성실함','꼼꼼함'],
+      summary:'익숙한 분야에서 실력을 갈고닦을 때 가장 편안한 유형입니다. 오랜 경력으로 쌓은 전문성을 살려 안정적으로 이어 가는 2막이 잘 맞습니다.'}
+  };
+
+  var state, idx, currentType;
+  function reset(){
+    state = {age:'', workplaces:[], main:'', years:'', p1:'', p2:'', p3:'', p4:'', p5:'', p6:'', retire:'', interest:''};
+    idx = 0;
+  }
+  reset();
+
+  var screens = {intro:$('dxIntro'), quiz:$('dxQuiz'), result:$('dxResult')};
+  function show(name){
+    Object.keys(screens).forEach(function(k){ screens[k].hidden = (k !== name); });
+  }
+  function toTop(){
+    var top = $('diagnosis').getBoundingClientRect().top;
+    if (top < 0 || top > 120) $('diagnosis').scrollIntoView({block:'start'});
+  }
+  function visible(){
+    return QUESTIONS.filter(function(q){ return !q.when || q.when(state); });
+  }
+
+  function render(){
+    var list = visible(), q = list[idx];
+    // '가장 오래 일한 곳'은 '일한 곳'의 덧붙임 질문이라 번호를 따로 세지 않는다 (항상 11문항)
+    var total = QUESTIONS.length - 1;
+    var num = list.slice(0, idx + 1).filter(function(x){ return x.id !== 'main'; }).length;
+    $('dxCount').textContent = num + ' / ' + total;
+    var pct = Math.round(((num - 1) / total) * 100);
+    $('dxBarFill').style.width = pct + '%';
+    $('dxBar').setAttribute('aria-valuenow', pct);
+    $('dxBack').disabled = (idx === 0);
+    $('dxPart').textContent = q.part;
+    $('dxQ').textContent = q.title;
+    var hint = q.hint || (q.part === '성향' ? '나와 가장 가까운 것을 골라 주세요. 정답은 없습니다.' : '');
+    $('dxHint').textContent = hint;
+    $('dxHint').hidden = !hint;
+
+    var opts = typeof q.options === 'function' ? q.options(state) : q.options;
+    var box = $('dxOptions');
+    box.innerHTML = '';
+    box.setAttribute('role', q.multi ? 'group' : 'radiogroup');
+    box.setAttribute('aria-labelledby', 'dxQ');
+
+    opts.forEach(function(o, i){
+      var b = document.createElement('button');
+      b.type = 'button';
+      b.className = 'dx-option' + (q.multi ? ' multi' : '');
+      var mark = document.createElement('span');
+      mark.className = 'dx-mark';
+      mark.setAttribute('aria-hidden', 'true');
+      var label = document.createElement('span');
+      label.textContent = o[1];
+      b.appendChild(mark);
+      b.appendChild(label);
+
+      if (q.multi){
+        var paint = function(){
+          var on = state[q.id].indexOf(o[0]) !== -1;
+          b.setAttribute('aria-pressed', on ? 'true' : 'false');
+          mark.textContent = on ? '✓' : MARKS[i];
+        };
+        paint();
+        b.addEventListener('click', function(){
+          var arr = state[q.id], at = arr.indexOf(o[0]);
+          if (at === -1) arr.push(o[0]); else arr.splice(at, 1);
+          // 고른 곳이 바뀌면 '가장 오래 일한 곳'을 다시 받는다 (한 곳만 골랐으면 그곳이 주된 곳)
+          state.main = arr.length === 1 ? arr[0] : '';
+          paint();
+          $('dxNext').disabled = arr.length === 0;
+        });
+      } else {
+        b.setAttribute('role', 'radio');
+        b.setAttribute('aria-checked', state[q.id] === o[0] ? 'true' : 'false');
+        mark.textContent = MARKS[i];
+        b.addEventListener('click', function(){ state[q.id] = o[0]; next(); });
+      }
+      box.appendChild(b);
+    });
+
+    $('dxNext').hidden = !q.multi;
+    $('dxNext').disabled = q.multi ? state[q.id].length === 0 : true;
+    $('dxQ').focus({preventScroll:true});
+  }
+
+  function next(){
+    if (idx < visible().length - 1){ idx++; render(); toTop(); }
+    else showResult();
+  }
+
+  // 보기 ①~④ → +3, +1, -1, -3 (세 문항 합은 항상 홀수 → 동점 없음)
+  var SCORE = {'1':3, '2':1, '3':-1, '4':-3};
+  function axis(keys){ return keys.reduce(function(s, k){ return s + (SCORE[state[k]] || 0); }, 0); }
+  function axisText(v, left, right){
+    if (v >= 5) return '확실한 ' + left + '형입니다.';
+    if (v > 0) return left + ' 쪽에 조금 더 가깝습니다.';
+    if (v > -5) return right + ' 쪽에 조금 더 가깝습니다.';
+    return '확실한 ' + right + '형입니다.';
+  }
+  function dotPos(v){ return (50 - (v / 9) * 42) + '%'; }
+
+  function showResult(){
+    var ei = axis(['p1','p2','p3']), cs = axis(['p4','p5','p6']);
+    var key = ei > 0 ? (cs > 0 ? 'pioneer' : 'connector') : (cs > 0 ? 'strategist' : 'craftsman');
+    var t = TYPES[key];
+    currentType = t;
+    $('dxCareer').textContent = WORKPLACES[state.main] + ' ' + YEARS[state.years] + ' 경력의';
+    $('dxName').textContent = t.name;
+    $('dxTagline').textContent = '"' + t.tagline + '"';
+    $('dxSummary').textContent = t.summary;
+    var kw = $('dxKeywords');
+    kw.innerHTML = '';
+    t.keywords.forEach(function(k){ var li = document.createElement('li'); li.textContent = k; kw.appendChild(li); });
+    $('dxDotEI').style.left = dotPos(ei);
+    $('dxDotCS').style.left = dotPos(cs);
+    $('dxDescEI').textContent = axisText(ei, '외향', '내향');
+    $('dxDescCS').textContent = axisText(cs, '도전', '안정');
+
+    $('dxFormMsg').className = '';
+    $('dxFormMsg').textContent = '';
+    $('dxSubmit').disabled = false;
+    $('dxSubmit').textContent = '상세 결과 받기';
+    show('result');
+    toTop();
+    $('dxName').focus({preventScroll:true});
+  }
+
+  $('dxStart').addEventListener('click', function(){ reset(); show('quiz'); render(); toTop(); });
+  $('dxNext').addEventListener('click', next);
+  $('dxBack').addEventListener('click', function(){ if (idx > 0){ idx--; render(); } });
+  $('dxRestart').addEventListener('click', function(){ reset(); show('intro'); toTop(); });
+
+  $('dxShare').addEventListener('click', function(){
+    var url = location.origin + location.pathname + '#diagnosis';
+    var text = '저는 "' + currentType.name + '"래요. 당신의 인생 2막 캐릭터는 무엇일까요? 3분 무료 진단';
+    var btn = $('dxShare');
+    if (navigator.share){
+      navigator.share({title:'나의 인생 2막 캐릭터 진단', text:text, url:url}).catch(function(){});
+    } else if (navigator.clipboard){
+      navigator.clipboard.writeText(text + '\n' + url).then(function(){
+        btn.textContent = '링크가 복사되었습니다';
+        setTimeout(function(){ btn.textContent = '지인에게 진단 권하기'; }, 2500);
+      });
+    } else {
+      window.prompt('아래 링크를 복사해 보내 주세요.', url);
+    }
+  });
+
+  function setMsg(type, text, link){
+    var m = $('dxFormMsg');
+    m.className = 'show ' + type;
+    m.textContent = text;
+    if (link){
+      m.appendChild(document.createElement('br'));
+      var a = document.createElement('a');
+      a.href = link;
+      a.className = 'dx-result-link';
+      a.textContent = '나의 상세 결과 바로 보기 →';
+      m.appendChild(a);
+    }
+  }
+
+  $('dxForm').addEventListener('submit', function(ev){
+    ev.preventDefault();
+    var email = $('dxEmail').value.trim();
+    if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)){
+      setMsg('error', '이메일 주소를 정확히 입력해 주세요.');
+      $('dxEmail').focus();
+      return;
+    }
+    if (!$('dxConsent').checked){
+      setMsg('error', '개인정보 수집·이용에 동의해 주셔야 결과를 보내드릴 수 있습니다.');
+      $('dxConsent').focus();
+      return;
+    }
+    var fd = new FormData();
+    fd.append('email', email);
+    fd.append('consent', '1');
+    fd.append('marketing', $('dxMarketing').checked ? '1' : '0');
+    fd.append('website', $('dxWebsite').value);
+    fd.append('age', state.age);
+    fd.append('workplaces', state.workplaces.join(','));
+    fd.append('main', state.main);
+    fd.append('years', state.years);
+    fd.append('answers', [state.p1, state.p2, state.p3, state.p4, state.p5, state.p6].join(''));
+    fd.append('retire', state.retire);
+    fd.append('interest', state.interest);
+
+    var btn = $('dxSubmit');
+    btn.disabled = true;
+    btn.textContent = '보내는 중…';
+    fetch('diagnosis.php', {method:'POST', body:fd})
+      .then(function(r){ return r.json(); })
+      .then(function(res){
+        if (res.ok){
+          setMsg('success', res.message, res.resultUrl);
+          btn.textContent = '보냈습니다';
+        } else {
+          setMsg('error', res.message);
+          btn.disabled = false;
+          btn.textContent = '상세 결과 받기';
+        }
+      })
+      .catch(function(){
+        setMsg('error', '전송 중 문제가 생겼습니다. 잠시 후 다시 시도해 주세요.');
+        btn.disabled = false;
+        btn.textContent = '상세 결과 받기';
+      });
+  });
+})();
 </script>
 
 </body>

@@ -1,0 +1,8 @@
+User-agent: *
+Allow: /
+Disallow: /admin.php
+Disallow: /result.php
+Disallow: /diagnosis.php
+Disallow: /contact.php
+
+Sitemap: https://lifetimes.kr/sitemap.xml

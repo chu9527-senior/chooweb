@@ -5,5 +5,13 @@ deployment:
     - /bin/cp -f index.html $DEPLOYPATH
     - /bin/cp -f contact.php $DEPLOYPATH
     - /bin/cp -f admin.php $DEPLOYPATH
+    - /bin/cp -f admin_diagnoses.php $DEPLOYPATH
+    - /bin/cp -f mail_lib.php $DEPLOYPATH
+    - /bin/cp -f diagnosis.html $DEPLOYPATH
+    - /bin/cp -f diagnosis.php $DEPLOYPATH
+    - /bin/cp -f diagnosis_data.php $DEPLOYPATH
+    - /bin/cp -f result.php $DEPLOYPATH
+    - /bin/cp -f robots.txt $DEPLOYPATH
+    - /bin/cp -f sitemap.xml $DEPLOYPATH
     - /bin/mkdir -p $DEPLOYPATH/images
     - /bin/cp -rf images/. $DEPLOYPATH/images/

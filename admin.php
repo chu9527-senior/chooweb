@@ -80,14 +80,20 @@ if (!$isLoggedIn) {
 // ---- DB 연결 ------------------------------------------------------------
 try {
     $pdo = new PDO(
-        'mysql:host=' . DB_HOST . ';dbname=' . DB_NAME . ';charset=utf8mb4',
-        DB_USER,
-        DB_PASS,
+        defined('DB_DSN') ? DB_DSN : 'mysql:host=' . DB_HOST . ';dbname=' . DB_NAME . ';charset=utf8mb4',
+        defined('DB_USER') ? DB_USER : null,
+        defined('DB_PASS') ? DB_PASS : null,
         [PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION, PDO::ATTR_DEFAULT_FETCH_MODE => PDO::FETCH_ASSOC]
     );
 } catch (Throwable $e) {
     http_response_code(500);
     exit('DB 연결 중 오류가 발생했습니다: ' . htmlspecialchars($e->getMessage(), ENT_QUOTES, 'UTF-8'));
+}
+
+// ---- 진단 대시보드 (admin.php?view=diagnoses) -------------------------------
+if (($_GET['view'] ?? '') === 'diagnoses') {
+    require __DIR__ . '/admin_diagnoses.php';
+    exit;
 }
 
 // ---- 읽음/안읽음/삭제 처리 ------------------------------------------------
@@ -180,6 +186,7 @@ function h(?string $value): string
         <div class="tabs">
             <a href="admin.php" class="<?= $filter === 'all' ? 'active' : '' ?>">전체 (<?= $totalCount ?>)</a>
             <a href="admin.php?filter=unread" class="<?= $filter === 'unread' ? 'active' : '' ?>">안읽음 (<?= $unreadCount ?>)</a>
+            <a href="admin.php?view=diagnoses">진단 대시보드</a>
         </div>
         <p class="count">총 <?= count($rows) ?>건 표시 중</p>
     </div>
