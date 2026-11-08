@@ -410,23 +410,46 @@
   }
   .hero2 h1{font-size:2.15rem;line-height:1.35;font-weight:800;margin:0 0 16px;letter-spacing:-0.01em;}
   .hero2 h1 em{font-style:normal;color:var(--color-gold-light);}
-  .hero2-sub{font-size:1.05rem;color:rgba(255,255,255,0.9);margin:0 0 22px;}
-  .hero2-trust{display:flex;flex-wrap:wrap;gap:8px 18px;margin:0;font-size:0.88rem;color:rgba(255,255,255,0.82);}
-  .hero2-trust li{display:flex;align-items:baseline;gap:6px;}
-  .hero2-trust strong{color:var(--color-gold-light);font-size:0.95rem;}
+  .hero2-sub{font-size:1.05rem;color:rgba(255,255,255,0.9);margin:0 0 12px;}
   .hero2-down{display:inline-flex;align-items:center;gap:8px;font-weight:700;color:var(--color-white);border-bottom:1px solid rgba(255,255,255,0.5);padding-bottom:2px;}
   .hero2-down:hover{color:var(--color-gold-light);border-color:var(--color-gold-light);}
   .hero2-down:focus-visible{outline:2px solid var(--color-gold-light);outline-offset:4px;border-radius:4px;}
 
   /* ===== 두 갈래 선택 카드 (히어로 아래로 살짝 겹침) ===== */
   .choose{position:relative;z-index:2;margin-top:-110px;padding:0 0 72px;background:transparent;scroll-margin-top:68px;}
+  /* "어떤 고민으로 오셨나요?" — 핵심 질문: 크게, 화면에 들어올 때 한 번 떠오르며 강조 */
   .choose-title{
-    margin:0 0 16px;
-    font-size:1.05rem;
-    font-weight:700;
-    color:var(--color-gold-light);
-    text-align:left;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    gap:14px;
+    margin:0 0 22px;
+    font-size:1.85rem;
+    font-weight:800;
+    line-height:1.3;
+    color:var(--color-white);
+    text-align:center;
+    text-shadow:0 2px 16px rgba(20,31,51,0.6);
   }
+  .choose-title em{
+    font-style:normal;
+    color:var(--color-gold-light);
+    background:linear-gradient(transparent 62%, rgba(216,185,120,0.35) 62%) no-repeat;
+    background-size:100% 100%;
+  }
+  .choose-title-arrow{
+    display:inline-flex;align-items:center;justify-content:center;
+    width:40px;height:40px;border-radius:50%;
+    background:var(--color-gold-light);color:var(--color-navy);
+    font-size:1.2rem;font-weight:800;text-shadow:none;flex-shrink:0;
+  }
+  .js .choose-title .choose-title-text{opacity:0;transform:translateY(18px);transition:opacity .7s ease, transform .7s ease;}
+  .js .choose-title em{background-size:0% 100%;transition:background-size .8s ease .5s;}
+  .js .choose-title .choose-title-arrow{opacity:0;transition:opacity .5s ease .4s;}
+  .js .choose-title.is-in .choose-title-text{opacity:1;transform:none;}
+  .js .choose-title.is-in em{background-size:100% 100%;}
+  .js .choose-title.is-in .choose-title-arrow{opacity:1;animation:chooseBounce 1.1s ease .9s 3;}
+  @keyframes chooseBounce{0%,100%{transform:translateY(0);}40%{transform:translateY(8px);}70%{transform:translateY(-2px);}}
   .choose-grid{display:grid;grid-template-columns:1fr;gap:18px;}
   .choose-card{
     height:100%;
@@ -1130,6 +1153,8 @@
     .choose-grid{grid-template-columns:1fr 1fr;gap:24px;}
     .choose-body{padding:26px 28px 28px;}
     .choose-q{font-size:1.4rem;}
+    .choose-title{font-size:2.6rem;margin-bottom:28px;}
+    .choose-title-arrow{width:48px;height:48px;font-size:1.4rem;}
     .steps4{grid-template-columns:repeat(4,1fr);gap:14px;}
     .steps4 li:not(:last-child)::after{
       content:"→";position:absolute;right:-12px;top:50%;transform:translateY(-50%);
@@ -1201,13 +1226,9 @@
     <div class="container hero2-inner">
       <div class="hero2-copy">
         <p class="hero2-eyebrow">50+ 인생설계, 이제 혼자 고민하지 마세요</p>
-        <h1 id="heroTitle">앞으로의 30년,<br><em>어떤 길을 걸어가시겠습니까?</em></h1>
-        <p class="hero2-sub">열심히 달려온 지금이, 나를 위한 인생을 설계할 때입니다. 퇴직 이후의 일부터 만일에 대한 대비까지, 3분 점검으로 지금의 나를 확인하고 맞춤 교육과정으로 한 걸음씩 실마리를 찾아가세요.</p>
-        <ul class="hero2-trust" aria-label="인생설계가이드 추영준">
-          <li><strong>20년</strong>중앙일보 사업부장</li>
-          <li><strong>출강</strong>기업·공공기관·대학</li>
-          <li><strong>저서</strong>글쓰기·취업·인생설계</li>
-        </ul>
+        <h1 id="heroTitle">새로운 인생 전환점,<br><em>어떤 길을 선택하시겠습니까?</em></h1>
+        <p class="hero2-sub">열심히 달려온 지금이, 나를 위한 인생을 설계할 때입니다. 퇴직이나 전직으로 고민하는 당신에게는 함께 고민해 줄 길잡이가 절실한 시기입니다.</p>
+        <p class="hero2-sub">3분 점검으로 지금의 나를 확인하고 지나온 길을 돌아보세요. 그동안 쌓아 온 당신의 지식과 경험으로 한 걸음씩 나아가면 충분합니다.</p>
       </div>
     </div>
   </section>
@@ -1215,10 +1236,10 @@
   <!-- 두 갈래 선택: 사진 카드 → 바로 퀴즈 -->
   <section class="choose" id="start" aria-labelledby="chooseTitle">
     <div class="container">
-      <h2 class="choose-title" id="chooseTitle">어떤 고민으로 오셨나요?</h2>
+      <h2 class="choose-title" id="chooseTitle"><span class="choose-title-text">어떤 <em>고민</em>으로 오셨나요?</span><span class="choose-title-arrow" aria-hidden="true">↓</span></h2>
       <div class="choose-grid">
         <a class="choose-card" href="#check-career" data-track="career">
-          <span class="choose-img"><img src="images/track-career.jpg" alt="체크 셔츠를 입고 부드럽게 웃는 50대 남성" width="1000" height="563" loading="lazy"></span>
+          <span class="choose-img"><img src="images/track-career.jpg" alt="큰 손이 책상에서 일하던 직장인을 출구(EXIT) 쪽으로 들어 옮기는 퇴직 일러스트" width="960" height="617" loading="lazy"></span>
           <span class="choose-body">
             <span class="choose-tag">50+ · 퇴직 전환기</span>
             <span class="choose-q">"퇴직하면, 나는 무슨 일을 해야 할까?"</span>
@@ -1228,7 +1249,7 @@
           </span>
         </a>
         <a class="choose-card b" href="#check-lifenote" data-track="life">
-          <span class="choose-img"><img src="images/track-lifenote.jpg" alt="정원 벤치에 나란히 앉아 이야기를 나누는 시니어 부부" width="1000" height="666" loading="lazy"></span>
+          <span class="choose-img"><img src="images/track-lifenote.jpg" alt="배낭을 메고 산길을 홀로 걸어가는 중년 남성의 뒷모습" width="1200" height="720" loading="lazy"></span>
           <span class="choose-body">
             <span class="choose-tag">60+ · 만일 대비기</span>
             <span class="choose-q">"갑자기 아프면, 우리 가족은 괜찮을까?"</span>
@@ -1837,6 +1858,19 @@
 </script>
 
 <script>
+/* "어떤 고민으로 오셨나요?" 강조: 화면에 들어오면 한 번 떠오르고 화살표가 3번 통통 (반복 없음) */
+(function(){
+  var t = document.getElementById('chooseTitle');
+  if (!t) return;
+  var reduce = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  if (reduce || !('IntersectionObserver' in window)){ t.classList.add('is-in'); return; }
+  var io = new IntersectionObserver(function(es){
+    es.forEach(function(e){ if (e.isIntersecting){ t.classList.add('is-in'); io.disconnect(); } });
+  }, {threshold:0.6});
+  io.observe(t);
+  setTimeout(function(){ t.classList.add('is-in'); }, 4000); // 안전장치
+})();
+
 /* ===== 3분 무료 점검: 인생 2막 진단(career) + 만일 대비 점검(life) =====
    코드 값·이름은 diagnosis_data.php / lifenote_data.php와 같아야 합니다. */
 (function(){
