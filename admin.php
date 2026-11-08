@@ -210,6 +210,7 @@ function h(?string $value): string
                 <th>연락처</th>
                 <th>이메일</th>
                 <th>문의 내용</th>
+                <th>메일 알림</th>
                 <th>작업</th>
             </tr>
         </thead>
@@ -227,6 +228,15 @@ function h(?string $value): string
                 <td><?= h((string) $row['phone']) ?></td>
                 <td><?= h((string) $row['email']) ?></td>
                 <td class="msg-cell"><?= h((string) $row['message']) ?></td>
+                <td><?php
+                    if (!array_key_exists('mail_sent', $row) || $row['mail_sent'] === null) {
+                        echo '-';
+                    } elseif ((int) $row['mail_sent'] === 1) {
+                        echo '<span style="color:#276b3a;font-weight:700;">발송됨</span>';
+                    } else {
+                        echo '<span style="color:#a33a3a;font-weight:700;">미발송</span>';
+                    }
+                ?></td>
                 <td>
                     <div class="actions">
                         <?php if ($isUnread): ?>

@@ -11,6 +11,8 @@
 
 declare(strict_types=1);
 
+date_default_timezone_set('Asia/Seoul'); // 접수 시각을 한국 시간으로
+
 // ---- 설정 ----------------------------------------------------------
 const RECIPIENT_EMAIL = 'chu9527@nate.com';
 const SITE_NAME       = '인생설계가이드';
@@ -57,7 +59,8 @@ $message      = isset($_POST['message']) ? trim((string) $_POST['message']) : ''
 $message      = mb_substr($message, 0, MAX_FIELD_LEN);
 
 // ---- 필수값 검증 -------------------------------------------------------
-$allowedTypes = ['강연문의', '저서문의', '기타'];
+// 문의 유형 (index.html 문의 양식의 select와 같아야 합니다)
+$allowedTypes = ['강연·강의요청', '프로그램문의', '저서문의', '기타', '강연문의'];  // '강연문의'는 예전 양식 호환용
 
 if ($name === '' || $phone === '' || $email === '' || $message === '') {
     respond(false, '이름, 연락처, 이메일, 문의 내용을 모두 입력해 주세요.', 422);
@@ -77,24 +80,33 @@ if (mb_strlen($name) > 100 || mb_strlen($phone) > 100 || mb_strlen($organization
 
 // ---- DB 저장 (선택적: db_config.php가 있을 때만 시도) --------------------
 $dbConfigPath = __DIR__ . '/db_config.php';
+$pdo = null;
+$savedId = null;
 
 if (file_exists($dbConfigPath)) {
     require $dbConfigPath;
 
     try {
         $pdo = new PDO(
-            'mysql:host=' . DB_HOST . ';dbname=' . DB_NAME . ';charset=utf8mb4',
-            DB_USER,
-            DB_PASS,
+            defined('DB_DSN') ? DB_DSN : 'mysql:host=' . DB_HOST . ';dbname=' . DB_NAME . ';charset=utf8mb4',
+            defined('DB_USER') ? DB_USER : null,
+            defined('DB_PASS') ? DB_PASS : null,
             [
                 PDO::ATTR_ERRMODE            => PDO::ERRMODE_EXCEPTION,
                 PDO::ATTR_DEFAULT_FETCH_MODE => PDO::FETCH_ASSOC,
             ]
         );
 
+        // 메일 발송 여부 기록용 칸이 없으면 추가 (관리자 화면에서 메일 도착 여부 확인)
+        if ($pdo->getAttribute(PDO::ATTR_DRIVER_NAME) === 'mysql'
+            && !$pdo->query("SHOW COLUMNS FROM inquiries LIKE 'mail_sent'")->fetch()) {
+            // 기존 문의는 NULL(기록 없음)로 두고, 새 문의부터 1(발송됨)/0(미발송)을 기록
+            $pdo->exec('ALTER TABLE inquiries ADD COLUMN mail_sent TINYINT(1) NULL DEFAULT NULL AFTER is_read');
+        }
+
         $stmt = $pdo->prepare(
             'INSERT INTO inquiries (name, organization, phone, email, inquiry_type, message, created_at)
-             VALUES (:name, :organization, :phone, :email, :inquiry_type, :message, NOW())'
+             VALUES (:name, :organization, :phone, :email, :inquiry_type, :message, :created_at)'
         );
         $stmt->execute([
             ':name'         => $name,
@@ -103,7 +115,9 @@ if (file_exists($dbConfigPath)) {
             ':email'        => $email,
             ':inquiry_type' => $inquiryType,
             ':message'      => $message,
+            ':created_at'   => date('Y-m-d H:i:s'),
         ]);
+        $savedId = (int) $pdo->lastInsertId();
     } catch (Throwable $e) {
         // DB 저장에 실패해도 이메일 발송은 계속 진행합니다.
         error_log('[contact.php] DB 저장 실패: ' . $e->getMessage());
@@ -130,7 +144,20 @@ $bodyLines = [
 ];
 $body = implode("\n", $bodyLines);
 
+$body .= "\n\n관리자 화면에서도 확인할 수 있습니다: https://lifetimes.kr/admin.php";
+
 $sent = sendViaBrevo(RECIPIENT_EMAIL, '추영준', $subject, $body, $email);
+
+if ($savedId !== null && $pdo !== null) {
+    try {
+        $pdo->prepare('UPDATE inquiries SET mail_sent = :s WHERE id = :id')->execute([':s' => $sent ? 1 : 0, ':id' => $savedId]);
+    } catch (Throwable $e) {
+        // mail_sent 칸이 없는 경우 등은 무시
+    }
+}
+if (!$sent) {
+    error_log('[contact.php] 관리자 알림 메일 발송 실패 (문의 id: ' . ($savedId ?? '저장 안 됨') . ')');
+}
 
 // ---- 접수자 본인에게 확인 메일 발송 (실패해도 전체 처리는 계속 진행) ------------
 if ($sent) {
@@ -172,4 +199,9 @@ if ($sent) {
     respond(true, '제안과 요청이 접수되었습니다. 빠른 시일 내에 답변드리겠습니다.');
 }
 
-respond(false, '메일 발송 중 오류가 발생했습니다. 잠시 후 다시 시도해 주세요.', 500);
+// 메일은 실패했지만 관리자 화면(DB)에는 저장된 경우: 접수는 된 것이므로 성공으로 안내
+if ($savedId !== null) {
+    respond(true, '제안과 요청이 접수되었습니다. 확인 후 빠른 시일 내에 연락드리겠습니다.');
+}
+
+respond(false, '접수 중 오류가 발생했습니다. 잠시 후 다시 시도하시거나 ' . RECIPIENT_EMAIL . '로 직접 보내 주세요.', 500);

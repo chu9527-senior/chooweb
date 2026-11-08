@@ -10,6 +10,7 @@ CREATE TABLE IF NOT EXISTS `inquiries` (
   `inquiry_type` VARCHAR(20) NOT NULL,
   `message` TEXT NOT NULL,
   `is_read` TINYINT(1) NOT NULL DEFAULT 0,
+  `mail_sent` TINYINT(1) NULL DEFAULT NULL,  -- 관리자 메일 알림 발송 여부 (contact.php가 없으면 자동 추가)
   `created_at` DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP,
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
