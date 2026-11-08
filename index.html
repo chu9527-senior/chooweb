@@ -378,76 +378,112 @@
     max-width:520px;
   }
 
-  /* ===== Pain intro: 고민 키워드가 어지럽게 떠다니다 실마리(진단 버튼)로 모이는 첫 화면 ===== */
-  .pain{
+  /* ===== Hero: 사진 + 공감 카피 ===== */
+  .hero2{
     position:relative;
-    overflow:hidden;
-    min-height:560px;
-    min-height:calc(100vh - 68px);
-    min-height:calc(100svh - 68px);
-    display:flex;
-    align-items:center;
-    padding:72px 0;
-    color:var(--color-white);
-    background:radial-gradient(ellipse at 50% 45%, #2a3d61 0%, var(--color-navy) 68%);
-  }
-  .pain-field{position:absolute;inset:0;pointer-events:none;}
-  html:not(.js) .pain-field{display:none;}
-  .pain-kw{
-    position:absolute;
-    left:0;
-    top:0;
-    white-space:nowrap;
-    font-weight:700;
-    line-height:1.2;
-    color:var(--color-gold-light);
-    will-change:transform,opacity;
-    user-select:none;
-    opacity:0;
-  }
-  .pain-kw.q{color:var(--color-white);font-weight:600;}
-  .pain-kw.s1{font-size:0.95rem;}
-  .pain-kw.s2{font-size:1.25rem;}
-  .pain-kw.s3{font-size:1.65rem;}
-  .pain-copy{position:relative;z-index:1;text-align:center;max-width:760px;margin:0 auto;}
-  .pain-title{
-    font-size:2.1rem;
-    line-height:1.38;
-    font-weight:800;
-    margin:0 0 18px;
-    text-shadow:0 2px 22px rgba(28,43,69,0.95), 0 0 2px rgba(28,43,69,0.9);
-  }
-  .pain-title em{font-style:normal;color:var(--color-gold-light);}
-  .pain-sub{
-    font-size:1.08rem;
-    margin:0 auto 26px;
-    max-width:560px;
-    color:rgba(255,255,255,0.92);
-    text-shadow:0 2px 14px rgba(28,43,69,0.95);
-  }
-  .pain-thread{
     display:block;
-    width:140px;
-    height:2px;
-    margin:0 auto 26px;
-    background:linear-gradient(90deg, transparent, var(--color-gold-light), transparent);
+    padding:0 0 140px;
+    color:var(--color-white);
+    overflow:hidden;
+    background:var(--color-navy);
   }
-  .pain-actions{display:flex;flex-direction:column;align-items:center;gap:14px;}
-  .btn-light{background:var(--color-white);color:var(--color-navy);}
-  .btn-light:hover{background:var(--color-bg-alt);}
-  .btn-light:focus-visible{outline:2px solid var(--color-gold-light);outline-offset:3px;}
-  .pain-more{font-size:0.92rem;color:rgba(255,255,255,0.8);text-decoration:underline;text-underline-offset:3px;}
-  .pain-more:hover{color:var(--color-gold-light);}
-  /* 단계 연출: JS가 정상 동작할 때만 숨겼다가 차례로 보여 줌 */
-  .js .pain .pain-title,
-  .js .pain .pain-sub,
-  .js .pain .pain-thread,
-  .js .pain .pain-actions{opacity:0;transform:translateY(10px);transition:opacity .7s ease, transform .7s ease;}
-  .js .pain .pain-thread{transform:scaleX(0);transition:opacity .6s ease, transform .9s ease;}
-  .js .pain.show-title .pain-title{opacity:1;transform:none;}
-  .js .pain.settled .pain-sub,
-  .js .pain.settled .pain-actions{opacity:1;transform:none;}
-  .js .pain.settled .pain-thread{opacity:1;transform:scaleX(1);}
+  /* 모바일: 사진(부부가 보이게)을 위에, 문구는 아래 남색 위에 */
+  .hero2-media{position:relative;height:44vh;min-height:280px;max-height:420px;}
+  .hero2-media img{width:100%;height:100%;object-fit:cover;object-position:47% 80%;}
+  .hero2-media::after{
+    content:"";
+    position:absolute;
+    inset:0;
+    background:linear-gradient(180deg, rgba(20,31,51,0) 55%, rgba(20,31,51,0.85) 90%, var(--color-navy) 100%);
+  }
+  .hero2-inner{position:relative;z-index:1;width:100%;margin-top:-36px;}
+  .hero2-copy{max-width:600px;}
+  .hero2-eyebrow{
+    display:inline-block;
+    margin:0 0 16px;
+    font-size:0.88rem;
+    font-weight:700;
+    color:var(--color-navy);
+    background:var(--color-gold-light);
+    padding:5px 14px;
+    border-radius:999px;
+  }
+  .hero2 h1{font-size:2.15rem;line-height:1.35;font-weight:800;margin:0 0 16px;letter-spacing:-0.01em;}
+  .hero2 h1 em{font-style:normal;color:var(--color-gold-light);}
+  .hero2-sub{font-size:1.05rem;color:rgba(255,255,255,0.9);margin:0 0 22px;}
+  .hero2-trust{display:flex;flex-wrap:wrap;gap:8px 18px;margin:0;font-size:0.88rem;color:rgba(255,255,255,0.82);}
+  .hero2-trust li{display:flex;align-items:baseline;gap:6px;}
+  .hero2-trust strong{color:var(--color-gold-light);font-size:0.95rem;}
+  .hero2-down{display:inline-flex;align-items:center;gap:8px;font-weight:700;color:var(--color-white);border-bottom:1px solid rgba(255,255,255,0.5);padding-bottom:2px;}
+  .hero2-down:hover{color:var(--color-gold-light);border-color:var(--color-gold-light);}
+  .hero2-down:focus-visible{outline:2px solid var(--color-gold-light);outline-offset:4px;border-radius:4px;}
+
+  /* ===== 두 갈래 선택 카드 (히어로 아래로 살짝 겹침) ===== */
+  .choose{position:relative;z-index:2;margin-top:-110px;padding:0 0 72px;background:transparent;scroll-margin-top:68px;}
+  .choose-title{
+    margin:0 0 16px;
+    font-size:1.05rem;
+    font-weight:700;
+    color:var(--color-gold-light);
+    text-align:left;
+  }
+  .choose-grid{display:grid;grid-template-columns:1fr;gap:18px;}
+  .choose-card{
+    height:100%;
+    display:flex;
+    flex-direction:column;
+    background:var(--color-white);
+    border-radius:18px;
+    overflow:hidden;
+    box-shadow:0 18px 40px rgba(20,31,51,0.18);
+    border:1px solid rgba(28,43,69,0.06);
+    transition:transform .2s ease, box-shadow .2s ease;
+  }
+  .choose-card:hover{transform:translateY(-4px);box-shadow:0 24px 48px rgba(20,31,51,0.24);}
+  .choose-card:active{transform:translateY(-1px) scale(0.99);}
+  .choose-card:focus-visible{outline:3px solid var(--color-gold);outline-offset:4px;}
+  .choose-img{display:block;aspect-ratio:16/9;overflow:hidden;background:var(--color-bg-alt);}
+  .choose-img img{width:100%;height:100%;object-fit:cover;transition:transform .4s ease;}
+  .choose-card:hover .choose-img img{transform:scale(1.03);}
+  .choose-body{flex:1;display:flex;flex-direction:column;gap:8px;padding:22px 22px 24px;border-top:4px solid var(--color-navy);}
+  .choose-card.b .choose-body{border-top-color:var(--color-gold);}
+  .choose-tag{font-size:0.82rem;font-weight:700;color:var(--color-text-muted);}
+  .choose-q{font-size:1.3rem;font-weight:800;color:var(--color-navy);line-height:1.4;}
+  .choose-desc{font-size:0.97rem;color:var(--color-text);flex:1;}
+  .choose-cta{
+    margin-top:8px;
+    display:inline-flex;
+    align-items:center;
+    justify-content:center;
+    gap:8px;
+    padding:14px 22px;
+    border-radius:999px;
+    background:var(--color-navy);
+    color:var(--color-white);
+    font-weight:700;
+  }
+  .choose-card:hover .choose-cta{background:var(--color-navy-light);}
+  .choose-meta{font-size:0.82rem;color:var(--color-text-muted);text-align:center;}
+
+  .steps4{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin:28px 0 0;padding:0;list-style:none;}
+  .steps4 li{
+    position:relative;
+    background:var(--color-white);
+    border:1px solid rgba(28,43,69,0.08);
+    border-radius:var(--radius);
+    padding:16px 14px 14px;
+    display:flex;
+    flex-direction:column;
+    gap:2px;
+  }
+  .steps4-no{
+    width:26px;height:26px;border-radius:50%;
+    background:var(--color-navy);color:var(--color-gold-light);
+    display:flex;align-items:center;justify-content:center;
+    font-size:0.85rem;font-weight:800;margin-bottom:6px;
+  }
+  .steps4 strong{color:var(--color-navy);font-size:0.98rem;}
+  .steps4 li > span:last-child{font-size:0.85rem;color:var(--color-text-muted);line-height:1.5;}
 
   /* ===== Diagnosis (메인 페이지 안에 들어간 진단) ===== */
   .dx{background:var(--color-bg);scroll-margin-top:68px;}
@@ -666,6 +702,9 @@
   .dx-cross p{margin:0 0 4px;color:var(--color-text);}
   .dx-cross .dx-link-btn{color:var(--color-navy);font-weight:800;text-decoration:underline;text-underline-offset:3px;}
   .dx-after-links{display:flex;justify-content:center;gap:10px;color:var(--color-text-muted);}
+
+  .programs-map{margin:0 0 48px;}
+  .programs .map-root,.programs .map-join{background:var(--color-white);}
 
   /* Program card links */
   .program-links{display:flex;flex-wrap:wrap;gap:10px;margin-top:4px;}
@@ -1055,11 +1094,6 @@
     .showcase{height:420px;}
     .showcase-caption h2{font-size:1.7rem;}
     .contact-wrap{grid-template-columns:0.9fr 1.1fr;align-items:start;}
-    .pain-title{font-size:2.9rem;}
-    .pain-sub{font-size:1.18rem;}
-    .pain-kw.s1{font-size:1.05rem;}
-    .pain-kw.s2{font-size:1.45rem;}
-    .pain-kw.s3{font-size:2rem;}
     .dx-card{padding:36px 40px;}
     .dx-q{font-size:1.6rem;}
     .dx-type-name{font-size:2.3rem;}
@@ -1085,11 +1119,36 @@
     .map-branches::after{bottom:0;border-top:none;border-radius:0 0 14px 14px;}
     .map-card{padding:30px 28px 24px;}
     .dx-cross,.dx-after-links{grid-column:1 / -1;}
+    .hero2{display:flex;align-items:flex-end;min-height:calc(100svh - 68px);padding:0 0 170px;}
+    .hero2-media{position:absolute;inset:0;height:auto;max-height:none;}
+    .hero2-media img{object-position:46% 72%;}
+    .hero2-media::after{background:linear-gradient(180deg, rgba(20,31,51,0.05) 0%, rgba(20,31,51,0.35) 38%, rgba(20,31,51,0.92) 78%, rgba(20,31,51,0.97) 100%);}
+    .hero2-inner{margin-top:0;}
+    .hero2 h1{font-size:2.9rem;}
+    .hero2-sub{font-size:1.15rem;}
+    .choose{margin-top:-130px;padding-bottom:96px;}
+    .choose-grid{grid-template-columns:1fr 1fr;gap:24px;}
+    .choose-body{padding:26px 28px 28px;}
+    .choose-q{font-size:1.4rem;}
+    .steps4{grid-template-columns:repeat(4,1fr);gap:14px;}
+    .steps4 li:not(:last-child)::after{
+      content:"→";position:absolute;right:-12px;top:50%;transform:translateY(-50%);
+      color:var(--color-gold);font-weight:800;z-index:1;
+    }
     .nav-menu{display:flex;}
     .nav-cta{display:inline-flex;}
     .hamburger{display:none;}
   }
   @media (min-width:1024px){
+    /* 데스크톱: 사진 속 부부(가운데)를 가리지 않도록 문구는 오른쪽 어두운 숲 위에 */
+    .hero2{align-items:center;padding:96px 0 190px;}
+    .hero2-media::after{
+      background:linear-gradient(90deg, rgba(20,31,51,0.10) 0%, rgba(20,31,51,0.25) 40%, rgba(20,31,51,0.80) 62%, rgba(20,31,51,0.93) 100%),
+                 linear-gradient(180deg, transparent 70%, rgba(20,31,51,0.55) 100%);
+    }
+    .hero2-media img{object-position:40% 70%;}
+    .hero2-copy{margin-left:auto;max-width:540px;}
+    .hero2 h1{font-size:3.1rem;}
     .hero-grid{
       flex-direction:row;
       text-align:left;
@@ -1134,82 +1193,58 @@
 
 <main id="top">
 
-  <!-- Pain intro: 방문자의 고민이 먼저 (퇴직·전직 + 만일 대비) -->
-  <section class="pain" id="painIntro" aria-labelledby="painTitle">
-    <div class="pain-field" id="painField" aria-hidden="true">
-      <span class="pain-kw s3">퇴직</span>
-      <span class="pain-kw s3">전직</span>
-      <span class="pain-kw s3">만일</span>
-      <span class="pain-kw s2">이직</span>
-      <span class="pain-kw s2">재취업</span>
-      <span class="pain-kw s2">돌봄</span>
-      <span class="pain-kw s2">노후 자금</span>
-      <span class="pain-kw s1">퇴사</span>
-      <span class="pain-kw s1">희망퇴직</span>
-      <span class="pain-kw s1">구직</span>
-      <span class="pain-kw s1">통합돌봄</span>
-      <span class="pain-kw s1">연명의료</span>
-      <span class="pain-kw s1">상속</span>
-      <span class="pain-kw s1">치매</span>
-      <span class="pain-kw s1">보험</span>
-      <span class="pain-kw s1">엔딩노트</span>
-      <span class="pain-kw q s1">다음엔 뭘 하지?</span>
-      <span class="pain-kw q s1">내 경력, 아직 쓸모 있을까?</span>
-      <span class="pain-kw q s1">갑자기 아프면 누가 돌봐 주지?</span>
-      <span class="pain-kw q s1">통장·보험, 가족이 알까?</span>
-      <span class="pain-kw q s1">가족에게 짐이 되면 어쩌지?</span>
-      <span class="pain-kw q s1">꼭 하고 싶은 말, 남겼나?</span>
+  <!-- Hero: 사진 + 공감 카피 (방문 이유가 먼저) -->
+  <section class="hero2" aria-labelledby="heroTitle">
+    <div class="hero2-media">
+      <img src="images/hero-path.jpg" alt="숲길을 나란히 걸어가는 시니어 부부의 뒷모습" width="1800" height="1200" fetchpriority="high">
     </div>
-    <div class="container pain-copy">
-      <h1 class="pain-title" id="painTitle">퇴직·전직 이후의 삶,<br>그리고 만일의 순간까지<br><em>준비되어 있으신가요?</em></h1>
-      <p class="pain-sub">일의 2막도, 만일에 대한 대비도 지나온 삶을 돌아보는 데서 시작합니다. 지금 나에게 필요한 준비부터 3분 만에 점검해 보세요.</p>
-      <span class="pain-thread" aria-hidden="true"></span>
-      <div class="pain-actions">
-        <a href="#start" class="btn btn-light" id="painCta">나에게 맞는 점검 고르기</a>
-        <a href="#about" class="pain-more">인생설계가이드 추영준 알아보기</a>
+    <div class="container hero2-inner">
+      <div class="hero2-copy">
+        <p class="hero2-eyebrow">50+ 인생설계, 이제 혼자 고민하지 마세요</p>
+        <h1 id="heroTitle">앞으로의 30년,<br><em>어떤 길을 걸어가시겠습니까?</em></h1>
+        <p class="hero2-sub">열심히 달려온 지금이, 나를 위한 인생을 설계할 때입니다. 퇴직 이후의 일부터 만일에 대한 대비까지, 3분 점검으로 지금의 나를 확인하고 맞춤 교육과정으로 한 걸음씩 실마리를 찾아가세요.</p>
+        <ul class="hero2-trust" aria-label="인생설계가이드 추영준">
+          <li><strong>20년</strong>중앙일보 사업부장</li>
+          <li><strong>출강</strong>기업·공공기관·대학</li>
+          <li><strong>저서</strong>글쓰기·취업·인생설계</li>
+        </ul>
       </div>
     </div>
   </section>
 
-  <!-- 두 갈래 길: 구조도 겸 선택 -->
-  <section class="paths" id="start" aria-labelledby="pathsTitle">
+  <!-- 두 갈래 선택: 사진 카드 → 바로 퀴즈 -->
+  <section class="choose" id="start" aria-labelledby="chooseTitle">
     <div class="container">
-      <div class="paths-head">
-        <h2 class="section-title" id="pathsTitle">지금 나에게 필요한 준비는?</h2>
-        <p class="section-desc">인생설계가이드는 50대 이상을 위해 두 갈래의 길을 준비했습니다. 두 길 모두 지나온 삶을 돌아보는 데서 출발하고, 언제든 서로 이어집니다.</p>
+      <h2 class="choose-title" id="chooseTitle">어떤 고민으로 오셨나요?</h2>
+      <div class="choose-grid">
+        <a class="choose-card" href="#check-career" data-track="career">
+          <span class="choose-img"><img src="images/track-career.jpg" alt="체크 셔츠를 입고 부드럽게 웃는 50대 남성" width="1000" height="563" loading="lazy"></span>
+          <span class="choose-body">
+            <span class="choose-tag">50+ · 퇴직 전환기</span>
+            <span class="choose-q">"퇴직하면, 나는 무슨 일을 해야 할까?"</span>
+            <span class="choose-desc">퇴직·전직·재취업을 앞두고 내 경력이 어디에 쓰일 수 있을지 궁금한 분</span>
+            <span class="choose-cta">인생 2막 진단 시작 <span aria-hidden="true">→</span></span>
+            <span class="choose-meta">11문항 · 3분 · 무료</span>
+          </span>
+        </a>
+        <a class="choose-card b" href="#check-lifenote" data-track="life">
+          <span class="choose-img"><img src="images/track-lifenote.jpg" alt="정원 벤치에 나란히 앉아 이야기를 나누는 시니어 부부" width="1000" height="666" loading="lazy"></span>
+          <span class="choose-body">
+            <span class="choose-tag">60+ · 만일 대비기</span>
+            <span class="choose-q">"갑자기 아프면, 우리 가족은 괜찮을까?"</span>
+            <span class="choose-desc">예기치 못한 사고와 질병에 대비해 건강·돌봄·재산·가족에게 남길 이야기를 미리 정리하고 싶은 분</span>
+            <span class="choose-cta">만일 대비 점검 시작 <span aria-hidden="true">→</span></span>
+            <span class="choose-meta">11문항 · 3분 · 무료</span>
+          </span>
+        </a>
       </div>
 
-      <div class="map" role="group" aria-label="인생설계 두 갈래 구조">
-        <div class="map-root">
-          <span class="map-step">공통 출발</span>
-          <strong>돌아보다</strong>
-          <span>지나온 경력과 삶을 꺼내어 정리합니다</span>
-        </div>
-        <div class="map-branches">
-          <article class="map-card track-a">
-            <p class="map-age">50대 · 퇴직 전환기</p>
-            <h3>인생 2막 설계</h3>
-            <p class="map-flow"><span>돌아보다</span><span aria-hidden="true">→</span><span>설계하다</span></p>
-            <p class="map-desc">퇴직·전직·이직을 앞두고, 내 경력과 성향에 맞는 일의 2막을 찾습니다.</p>
-            <ul class="map-tags"><li>재취업·전직</li><li>창업</li><li>지식 나눔</li></ul>
-            <a href="#check-career" class="btn btn-primary btn-block" data-track="career">인생 2막 진단 시작</a>
-            <a href="#programs" class="map-more">50+ 커리어 설계 과정 보기</a>
-          </article>
-          <article class="map-card track-b">
-            <p class="map-age">60+ · 만일 대비기</p>
-            <h3>인생노트 · 만일 대비</h3>
-            <p class="map-flow"><span>돌아보다</span><span aria-hidden="true">→</span><span>대비하다</span><span aria-hidden="true">→</span><span>남기다</span></p>
-            <p class="map-desc">예기치 못한 사고와 질병에 대비해 건강·돌봄·재산·내 뜻을 미리 정리합니다.</p>
-            <ul class="map-tags"><li>돌봄 계획</li><li>의료 결정</li><li>가족 메시지</li></ul>
-            <a href="#check-lifenote" class="btn btn-primary btn-block" data-track="life">만일 대비 점검 시작</a>
-            <a href="lifenote.html" class="map-more">60+ 인생노트 과정 보기</a>
-          </article>
-        </div>
-        <div class="map-join">
-          <strong>하나로 이어지는 인생설계</strong>
-          <span>일의 2막을 설계한 뒤에는 만일에 대비하고, 인생노트로 가족에게 이야기를 남깁니다.</span>
-        </div>
-      </div>
+      <ol class="steps4" aria-label="인생설계가이드와 실마리를 찾는 4단계">
+        <li><span class="steps4-no">1</span><strong>고민 고르기</strong><span>지금 마음에 가까운 길을 선택</span></li>
+        <li><span class="steps4-no">2</span><strong>3분 점검</strong><span>쉬운 4지선다 퀴즈로 나를 확인</span></li>
+        <li><span class="steps4-no">3</span><strong>맞춤 결과</strong><span>내 유형과 지금 할 일을 한눈에</span></li>
+        <li><span class="steps4-no">4</span><strong>교육과정</strong><span>하나씩 배우며 실마리를 찾기</span></li>
+      </ol>
     </div>
   </section>
 
@@ -1478,6 +1513,40 @@
     <div class="container reveal">
       <h2 class="section-title">프로그램</h2>
       <p class="section-desc">생애 시기에 맞춰 두 과정을 운영합니다. 50+에게는 일의 2막 설계를, 60+에게는 만일에 대비하는 인생노트를 제공합니다. 두 과정 모두 지나온 삶을 돌아보는 데서 출발해 자연스럽게 이어집니다.</p>
+      <div class="programs-map">
+      <div class="map" role="group" aria-label="인생설계 두 갈래 구조">
+        <div class="map-root">
+          <span class="map-step">공통 출발</span>
+          <strong>돌아보다</strong>
+          <span>지나온 경력과 삶을 꺼내어 정리합니다</span>
+        </div>
+        <div class="map-branches">
+          <article class="map-card track-a">
+            <p class="map-age">50+ · 퇴직 전환기</p>
+            <h3>인생 2막 설계</h3>
+            <p class="map-flow"><span>돌아보다</span><span aria-hidden="true">→</span><span>설계하다</span></p>
+            <p class="map-desc">퇴직·전직·이직을 앞두고, 내 경력과 성향에 맞는 일의 2막을 찾습니다.</p>
+            <ul class="map-tags"><li>재취업·전직</li><li>창업</li><li>지식 나눔</li></ul>
+            <a href="#check-career" class="btn btn-primary btn-block" data-track="career">인생 2막 진단 시작</a>
+            <a href="#programs" class="map-more">50+ 커리어 설계 과정 보기</a>
+          </article>
+          <article class="map-card track-b">
+            <p class="map-age">60+ · 만일 대비기</p>
+            <h3>인생노트 · 만일 대비</h3>
+            <p class="map-flow"><span>돌아보다</span><span aria-hidden="true">→</span><span>대비하다</span><span aria-hidden="true">→</span><span>남기다</span></p>
+            <p class="map-desc">예기치 못한 사고와 질병에 대비해 건강·돌봄·재산·내 뜻을 미리 정리합니다.</p>
+            <ul class="map-tags"><li>돌봄 계획</li><li>의료 결정</li><li>가족 메시지</li></ul>
+            <a href="#check-lifenote" class="btn btn-primary btn-block" data-track="life">만일 대비 점검 시작</a>
+            <a href="lifenote.html" class="map-more">60+ 인생노트 과정 보기</a>
+          </article>
+        </div>
+        <div class="map-join">
+          <strong>하나로 이어지는 인생설계</strong>
+          <span>일의 2막을 설계한 뒤에는 만일에 대비하고, 인생노트로 가족에게 이야기를 남깁니다.</span>
+        </div>
+      </div>
+      </div>
+
       <div class="program-grid">
         <div class="program-card track-50">
           <span class="program-eyebrow">50+ 대상 · 퇴직 전환기</span>
@@ -1768,125 +1837,6 @@
 </script>
 
 <script>
-/* ===== Pain intro 연출 =====
-   1) 고민 키워드가 화면을 어지럽게 떠다님 (약 2.6초)
-   2) 키워드들이 '진단 시작' 버튼(실마리)으로 빨려 들어가듯 모임
-   3) 문구·버튼이 나타나고, 키워드는 흐릿한 배경으로 남음 (반복 없음)
-   움직임 줄이기 설정 사용자는 바로 3)의 상태로 보여 줌 */
-(function(){
-  var sec = document.getElementById('painIntro');
-  var field = document.getElementById('painField');
-  var cta = document.getElementById('painCta');
-  if (!sec || !field || !cta) return;
-
-  var kws = Array.prototype.slice.call(field.querySelectorAll('.pain-kw'));
-  var reduce = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-  var W = field.clientWidth, H = field.clientHeight;
-  var done = false;
-
-  var items = kws.map(function(el, i){
-    var w = el.offsetWidth, h = el.offsetHeight;
-    var speed = 70 + Math.random() * 110;
-    var ang = Math.random() * Math.PI * 2;
-    return {
-      el:el, w:w, h:h,
-      x:Math.random() * Math.max(1, W - w),
-      y:Math.random() * Math.max(1, H - h),
-      vx:Math.cos(ang) * speed, vy:Math.sin(ang) * speed,
-      r:(Math.random() * 2 - 1) * 10,
-      op:el.classList.contains('s3') ? 0.95 : (el.classList.contains('q') ? 0.85 : 0.6 + Math.random() * 0.3)
-    };
-  });
-
-  function place(it, scale){
-    it.el.style.transform = 'translate(' + it.x.toFixed(1) + 'px,' + it.y.toFixed(1) + 'px) rotate(' + it.r.toFixed(1) + 'deg)' + (scale ? ' scale(' + scale + ')' : '');
-  }
-
-  // 최종 배경 배치: 가운데 문구 영역은 피해서 가장자리에 흩어 둠
-  function scatter(){
-    W = field.clientWidth; H = field.clientHeight;
-    var placed = [], GAP = 14;
-    function hits(x, y, it){
-      // 가운데 문구 영역
-      if (Math.abs(x + it.w / 2 - W / 2) < W * 0.34 + it.w / 2 && Math.abs(y + it.h / 2 - H / 2) < H * 0.24 + it.h / 2) return true;
-      for (var k = 0; k < placed.length; k++){
-        var p = placed[k];
-        if (x < p.x + p.w + GAP && x + it.w + GAP > p.x && y < p.y + p.h + GAP && y + it.h + GAP > p.y) return true;
-      }
-      return false;
-    }
-    items.forEach(function(it){
-      var x, y, tries = 0;
-      do {
-        x = Math.random() * Math.max(1, W - it.w);
-        y = Math.random() * Math.max(1, H - it.h);
-        tries++;
-      } while (hits(x, y, it) && tries < 60);
-      if (tries >= 60){ it.el.style.visibility = 'hidden'; }  // 좁은 화면에서 자리가 없으면 생략
-      else { it.el.style.visibility = ''; placed.push({x:x, y:y, w:it.w, h:it.h}); }
-      it.x = x; it.y = y; it.r = 0;
-    });
-  }
-
-  function finish(){
-    if (done) return;
-    done = true;
-    sec.classList.add('show-title', 'settled');
-    scatter();
-    items.forEach(function(it){ it.el.style.transition = 'none'; place(it); });
-    void field.offsetWidth;
-    items.forEach(function(it){ it.el.style.transition = 'opacity 1.2s ease'; it.el.style.opacity = '0.13'; });
-  }
-
-  if (reduce){ finish(); return; }
-
-  items.forEach(function(it){ place(it); it.el.style.opacity = it.op; });
-  setTimeout(function(){ sec.classList.add('show-title'); }, 900);
-
-  var start = performance.now(), last = start, CHAOS = 2600;
-  function tick(now){
-    if (done) return;
-    var dt = Math.min(0.05, (now - last) / 1000);
-    last = now;
-    var t = (now - start) / 1000;
-    items.forEach(function(it, i){
-      // 직선 이동 + 흔들림 = 어지러운 느낌
-      it.x += it.vx * dt + Math.sin(t * 2.4 + i) * 0.8;
-      it.y += it.vy * dt + Math.cos(t * 2.0 + i * 1.3) * 0.8;
-      if (it.x < 0){ it.x = 0; it.vx = Math.abs(it.vx); }
-      if (it.x > W - it.w){ it.x = W - it.w; it.vx = -Math.abs(it.vx); }
-      if (it.y < 0){ it.y = 0; it.vy = Math.abs(it.vy); }
-      if (it.y > H - it.h){ it.y = H - it.h; it.vy = -Math.abs(it.vy); }
-      it.r += Math.sin(t * 3 + i) * 0.35;
-      place(it);
-    });
-    if (now - start < CHAOS) requestAnimationFrame(tick); else gather();
-  }
-  requestAnimationFrame(tick);
-
-  // 실마리: 흩어진 고민이 진단 버튼 한 점으로 모임
-  function gather(){
-    var fr = field.getBoundingClientRect(), cr = cta.getBoundingClientRect();
-    var gx = cr.left - fr.left + cr.width / 2, gy = cr.top - fr.top + cr.height / 2;
-    items.forEach(function(it, i){
-      var delay = i * 22;
-      it.el.style.transition = 'transform .85s cubic-bezier(.55,0,.75,.2) ' + delay + 'ms, opacity .85s ease ' + delay + 'ms';
-      it.x = gx - it.w / 2; it.y = gy - it.h / 2; it.r = 0;
-      place(it, 0.2);
-      it.el.style.opacity = '0';
-    });
-    setTimeout(finish, 850 + items.length * 22 + 60);
-  }
-
-  // 안전장치: 탭이 백그라운드여서 애니메이션이 멈춰도 내용은 반드시 보이게
-  setTimeout(finish, 6500);
-  window.addEventListener('resize', function(){
-    if (!done) { W = field.clientWidth; H = field.clientHeight; return; }
-    scatter();
-    items.forEach(function(it){ it.el.style.transition = 'none'; place(it); });
-  });
-})();
-
 /* ===== 3분 무료 점검: 인생 2막 진단(career) + 만일 대비 점검(life) =====
    코드 값·이름은 diagnosis_data.php / lifenote_data.php와 같아야 합니다. */
 (function(){
@@ -2200,7 +2150,7 @@
     b.addEventListener('click', function(){ start(b.getAttribute('data-start')); });
   });
   // 두 갈래 구조도의 버튼: 바로 해당 점검 시작
-  document.querySelectorAll('.map-card [data-track]').forEach(function(a){
+  document.querySelectorAll('.map-card [data-track], .choose-card[data-track]').forEach(function(a){
     a.addEventListener('click', function(e){ e.preventDefault(); start(a.getAttribute('data-track')); });
   });
   $('dxNext').addEventListener('click', next);
