@@ -4,5 +4,7 @@ Disallow: /admin.php
 Disallow: /result.php
 Disallow: /diagnosis.php
 Disallow: /contact.php
+Disallow: /lifenote_result.php
+Disallow: /lifenote_check.php
 
 Sitemap: https://lifetimes.kr/sitemap.xml

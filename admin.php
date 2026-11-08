@@ -95,6 +95,10 @@ if (($_GET['view'] ?? '') === 'diagnoses') {
     require __DIR__ . '/admin_diagnoses.php';
     exit;
 }
+if (($_GET['view'] ?? '') === 'lifenote') {
+    require __DIR__ . '/admin_lifenote.php';
+    exit;
+}
 
 // ---- 읽음/안읽음/삭제 처리 ------------------------------------------------
 if (isset($_GET['action'], $_GET['id'])) {
@@ -186,7 +190,8 @@ function h(?string $value): string
         <div class="tabs">
             <a href="admin.php" class="<?= $filter === 'all' ? 'active' : '' ?>">전체 (<?= $totalCount ?>)</a>
             <a href="admin.php?filter=unread" class="<?= $filter === 'unread' ? 'active' : '' ?>">안읽음 (<?= $unreadCount ?>)</a>
-            <a href="admin.php?view=diagnoses">진단 대시보드</a>
+            <a href="admin.php?view=diagnoses">인생 2막 진단</a>
+            <a href="admin.php?view=lifenote">인생노트 점검</a>
         </div>
         <p class="count">총 <?= count($rows) ?>건 표시 중</p>
     </div>

@@ -169,13 +169,14 @@ function dxBars(array $labels, array $counts): string
 </head>
 <body>
 <header>
-    <h1>진단 대시보드 (인생설계가이드)</h1>
+    <h1>인생 2막 진단 대시보드 (인생설계가이드)</h1>
     <a href="admin.php?logout=1">로그아웃</a>
 </header>
 <div class="wrap">
     <div class="tabs">
         <a href="admin.php">문의 내역</a>
-        <a href="admin.php?view=diagnoses" class="active">진단 대시보드</a>
+        <a href="admin.php?view=diagnoses" class="active">인생 2막 진단</a>
+        <a href="admin.php?view=lifenote">인생노트 점검</a>
     </div>
 
     <div class="cards">

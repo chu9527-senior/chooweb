@@ -11,6 +11,11 @@ deployment:
     - /bin/cp -f diagnosis.php $DEPLOYPATH
     - /bin/cp -f diagnosis_data.php $DEPLOYPATH
     - /bin/cp -f result.php $DEPLOYPATH
+    - /bin/cp -f lifenote.html $DEPLOYPATH
+    - /bin/cp -f lifenote_data.php $DEPLOYPATH
+    - /bin/cp -f lifenote_check.php $DEPLOYPATH
+    - /bin/cp -f lifenote_result.php $DEPLOYPATH
+    - /bin/cp -f admin_lifenote.php $DEPLOYPATH
     - /bin/cp -f robots.txt $DEPLOYPATH
     - /bin/cp -f sitemap.xml $DEPLOYPATH
     - /bin/mkdir -p $DEPLOYPATH/images
